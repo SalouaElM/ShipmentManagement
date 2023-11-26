@@ -1,7 +1,71 @@
 <mvc:View controllerName="ap.shipmentmanagement.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
     <Page id="page" title="{i18n>title}">
-        <content />
+         <content>
+            <Table
+                id="shipmentTable"
+                items="{/ShipmentSet}"
+                headerText="Shipments"
+            >
+                <columns>
+                    <Column
+                        id="tknumCol"
+                        width="12em"
+                    >
+                        <VBox>
+                            <Text text="ShipmentNr" />
+                        </VBox>
+                    </Column>
+                    <Column
+                        id="erdatCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Created On" />
+                    </Column>
+                    <Column
+                        id="tplstCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Planning Point" />
+                    </Column>
+                    <Column
+                        id="shtypCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Shipment Type" />
+                    </Column>
+                    <Column
+                        id="vbtypCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Category" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" vAlign="Middle" press=".onListItemPress">
+                        <cells>
+                            <ObjectIdentifier
+                                title="{Tknum}"
+
+                            />
+                            <Text text="{Erdat}" />
+                            <Text text="{Tplst}" />
+                            <Text text="{Shtyp}" />
+                            <Text text="{Vbtyp}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
     </Page>
 </mvc:View>
