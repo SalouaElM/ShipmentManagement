@@ -7,8 +7,22 @@
             <Table
                 id="shipmentTable"
                 items="{/ShipmentSet}"
-                headerText="Shipments"
             >
+            <headerToolbar>
+				<OverflowToolbar>
+					<Title text="Shipments" level="H2"/>
+					<ToolbarSpacer/>
+					<Button
+						tooltip="Sort"
+						icon="sap-icon://sort"
+						press="handleSortButtonPressed"/>
+					<Button
+						tooltip="Filter"
+						icon="sap-icon://filter"
+						press="handleFilterButtonPressed"/>
+
+				</OverflowToolbar>
+			</headerToolbar>
                 <columns>
                     <Column
                         id="tknumCol"
