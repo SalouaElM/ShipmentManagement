@@ -32,13 +32,13 @@
                             <Text text="ShipmentNr" />
                         </VBox>
                     </Column>
-                    <Column
-                        id="erdatCol"
+                      <Column
+                        id="planneddateCol"
                         minScreenWidth="Tablet"
                         demandPopin="true"
                         hAlign="End"
                     >
-                        <Text text="Created On" />
+                        <Text text="Planned Date" />
                     </Column>
                     <Column
                         id="tplstCol"
@@ -72,7 +72,7 @@
                                 title="{Tknum}"
 
                             />
-                            <Text text="{Erdat}" />
+                            <Text text="{PlannedDate}" />
                             <Text text="{Tplst}" />
                             <Text text="{Shtyp}" />
                             <Text text="{Vbtyp}" />

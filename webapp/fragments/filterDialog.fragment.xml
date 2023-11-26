@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleFilterDialogConfirm">
+		<filterItems>
+			<ViewSettingsFilterItem
+				text="Planning Point"
+				key="Tplst"
+				multiSelect="false">
+				<items>
+					<ViewSettingsItem text="Germany" key="DE00" />
+					<ViewSettingsItem text="United Stated" key="US00" />
+				</items>
+			</ViewSettingsFilterItem>
+            
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>
