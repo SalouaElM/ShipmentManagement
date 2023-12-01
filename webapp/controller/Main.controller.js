@@ -2,14 +2,12 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     'sap/ui/Device',
     'sap/f/library',
-    'sap/ui/model/Sorter',
-    'sap/ui/core/Fragment',
-    'sap/ui/model/Filter',
+    '../util/SortAndFilterHelper'
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter) {
+    function (Controller, Device, fioriLibrary, SortAndFilterHelper) {
         "use strict";
 
         return Controller.extend("ap.shipmentmanagement.controller.Main", {
@@ -30,10 +28,8 @@ sap.ui.define([
                     });
             }, 
             handleFilterButtonPressed: function () {
-                this.getViewSettingsDialog("ap.shipmentmanagement.fragments.filterDialog")
-                    .then(function (oViewSettingsDialog) {
-                        oViewSettingsDialog.open();
-                    });
+                SortAndFilterHelper.handleSortButtonPressed(this, "ap.customerapplication.fragments.sortDialog")
+            
             },
             getViewSettingsDialog: function (sDialogFragmentName) {
                 var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
