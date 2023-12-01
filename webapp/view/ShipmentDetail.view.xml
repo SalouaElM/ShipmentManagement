@@ -1,4 +1,5 @@
 <mvc:View
+	controllerName="ap.shipmentmanagement.controller.ShipmentDetail"
 	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.uxap"
 	xmlns:m="sap.m"
 	xmlns:f="sap.f"
