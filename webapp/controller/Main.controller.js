@@ -29,57 +29,13 @@ sap.ui.define([
             }, 
             handleFilterButtonPressed: function () {
                 SortAndFilterHelper.handleSortButtonPressed(this, "ap.customerapplication.fragments.sortDialog")
-            
-            },
-            getViewSettingsDialog: function (sDialogFragmentName) {
-                var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
-
-                if (!pDialog) {
-                    pDialog = Fragment.load({
-                        id: this.getView().getId(),
-                        name: sDialogFragmentName,
-                        controller: this
-                    }).then(function (oDialog) {
-                        if (Device.system.desktop) {
-                            oDialog.addStyleClass("sapUiSizeCompact");
-                        }
-                        return oDialog;
-                    });
-                    this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
-                }
-                return pDialog;
+           
             },
             handleSortDialogConfirm: function (oEvent) {
-                var oTable = this.byId("shipmentTable"),
-                    mParams = oEvent.getParameters(),
-                    oBinding = oTable.getBinding("items"),
-                    sPath,
-                    bDescending,
-                    aSorters = [];
-
-                sPath = mParams.sortItem.getKey();
-                bDescending = mParams.sortDescending;
-                aSorters.push(new Sorter(sPath, bDescending));
-
-                // apply the selected sort and group settings
-                oBinding.sort(aSorters);
+                SortAndFilterHelper.handleSortDialogConfirm(oEvent, this, "customersTable")
             },
             handleFilterDialogConfirm: function (oEvent) {
-                var oTable = this.byId("shipmentTable"),
-                    mParams = oEvent.getParameters(),
-                    oBinding = oTable.getBinding("items"),
-                    aFilters = [];
-
-                mParams.filterItems.forEach(function(oItem) {
-                    let sPath = oItem.getParent().getKey(),
-                        sOperator = 'EQ',
-                        sValue1 = oItem.getKey(),
-                        oFilter = new Filter(sPath, sOperator, sValue1);
-                    aFilters.push(oFilter);
-                });
-
-                // apply filter settings
-                oBinding.filter(aFilters);
+                SortAndFilterHelper.handleFilterDialogConfirm(oEvent, this, 'customersTable')
             },
         });
     });
