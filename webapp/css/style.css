@@ -1,1 +1,23 @@
-/* Enter your custom styles here */
+/* Remove border from the button */
+.customButton {
+    border: none !important;
+    background-color: white !important;
+    padding: 0 !important; /* Remove padding */
+    overflow: hidden; /* Hide overflow content */
+    box-shadow: none !important; /* Remove any box shadow */
+    border-radius: 0 !important; /* Remove border radius if present */
+}
+
+.customButton .sapMBtnInner {
+    border: none !important;
+    background-color: white !important;
+    padding: 0 !important; /* Remove padding */
+    overflow: hidden; /* Hide overflow content */
+}
+
+.customButton:hover {
+    background-color: #eaecee !important; /* Change to the desired gray color */
+    /* Add any other styles for hover state */
+    padding: 0 !important; /* Remove padding */
+    overflow: hidden; /* Hide overflow content */
+}
