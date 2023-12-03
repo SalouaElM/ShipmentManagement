@@ -12,7 +12,7 @@ sap.ui.define(
         onInit: function () {
           let oRouter = this.getOwnerComponent().getRouter();
           oRouter
-            .getRoute("main")
+            .getRoute("master")
             .attachPatternMatched(this._onShipmentMatched, this);
           oRouter
             .getRoute("detail")
@@ -21,7 +21,7 @@ sap.ui.define(
         _onShipmentMatched: function (oEvent) {
           let sTknum = oEvent.getParameter("arguments").shipment || "0";
           this.getView().bindElement({
-            path: `//ShipmentSet('${sTknum}')`,
+            path: `/ShipmentSet('${sTknum}')`,
             model: "",
           });
         },
