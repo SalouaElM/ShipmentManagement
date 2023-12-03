@@ -21,3 +21,22 @@
     padding: 0 !important; /* Remove padding */
     overflow: hidden; /* Hide overflow content */
 }
+/* status coloring */
+.iconButton .sapMBtnIcon:before {
+    color: red !important; /* Default color for the icon */
+}
+/* Color for message-error icon */
+.iconButton .sapMBtnIcon[sap-ui-icon='sap-icon://message-error']:before {
+    color: red !important;
+}
+
+/* Color for alert icon */
+.iconButton .sapMBtnIcon[sap-ui-icon='sap-icon://alert']:before {
+    color: yellow !important;
+}
+
+/* Color for status-completed icon */
+.iconButton .sapMBtnIcon[sap-ui-icon='sap-icon://status-completed']:before {
+    color: green !important;
+}
+
