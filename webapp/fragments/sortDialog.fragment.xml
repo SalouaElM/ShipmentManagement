@@ -5,7 +5,7 @@
 		confirm="handleSortDialogConfirm">
 		<sortItems>
 			<ViewSettingsItem text="ShipmentNr" key="Tknum" selected="true" />
-			<ViewSettingsItem text="Created On" key="Erdat" />
+			<ViewSettingsItem text="Planned Date" key="PlannedDate" />
 			<ViewSettingsItem text="Planning Point" key="Tplst" />
 			<ViewSettingsItem text="Shipment Type" key="Shtyp" />
             <ViewSettingsItem text="Category" key="Vbtyp" />
