@@ -6,12 +6,11 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
-    "sap/ui/model/type/Time", // Import the Time formatter
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter, Time) {
+  function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter) {
     "use strict";
 
     return Controller.extend("ap.shipmentmanagement.controller.Main", {
@@ -32,6 +31,7 @@ sap.ui.define(
 
         });
       },
+      //implementation that when you click on the Tknum, it opens the inplanning details.
       onTknumClick: function (oEvent) {
         let sShipmentPath = oEvent.getSource().getBindingContext().getPath();
         let oSelectedShipment = sShipmentPath.split("'")[1];
@@ -46,13 +46,18 @@ sap.ui.define(
                 var oView = this.getView();
                 var oDialog = oView.byId("inplanningDialog");
 
-                // Populate dialog with inplanning details
-                oView.byId("plannedDateText").setText(oData.PlannedDate);
-                oView.byId("timeInText").setText(oData.TimeIn);
-                oView.byId("timeOutText").setText(oData.TimeOut);
-                oView.byId("appTimeText").setText(oData.AppTime);
-                oView.byId("remarksText").setText(oData.Remarks);
+                var plannedDate = oData.PlannedDate ? new Date(oData.PlannedDate).toLocaleString() : "";
+                var timeIn = oData.TimeIn ? new Date(oData.TimeIn.ms).toLocaleTimeString() : "";
+                var timeOut = oData.TimeOut ? new Date(oData.TimeOut.ms).toLocaleTimeString() : "";
+                var appTime = oData.AppTime ? new Date(oData.AppTime.ms).toLocaleTimeString() : "";
 
+                // Set formatted values to the respective Text controls
+                oView.byId("plannedDateText").setText(plannedDate);
+                oView.byId("timeInText").setText(timeIn);
+                oView.byId("timeOutText").setText(timeOut);
+                oView.byId("appTimeText").setText(appTime);
+                oView.byId("remarksText").setText(oData.Remarks);
+                
                 oDialog.open();
             }.bind(this),
             error: function () {
