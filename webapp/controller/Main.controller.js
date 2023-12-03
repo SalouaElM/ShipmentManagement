@@ -6,11 +6,12 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
+    "sap/ui/model/type/Time", // Import the Time formatter
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter) {
+  function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter, Time) {
     "use strict";
 
     return Controller.extend("ap.shipmentmanagement.controller.Main", {
@@ -28,8 +29,44 @@ sap.ui.define(
         this.getOwnerComponent().getRouter().navTo("detail", {
           layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded,
           shipment: oSelectedShipment,
+
         });
       },
+      onTknumClick: function (oEvent) {
+        let sShipmentPath = oEvent.getSource().getBindingContext().getPath();
+        let oSelectedShipment = sShipmentPath.split("'")[1];
+
+        this.openInplanningDialog(oSelectedShipment);
+    },
+
+      openInplanningDialog: function (oSelectedShipment) {
+        var oModel = this.getView().getModel(); // Assuming OData model is set on the view
+        oModel.read("/ShipmentSet('" + oSelectedShipment + "')", {
+            success: function (oData) {
+                var oView = this.getView();
+                var oDialog = oView.byId("inplanningDialog");
+
+                // Populate dialog with inplanning details
+                oView.byId("plannedDateText").setText(oData.PlannedDate);
+                oView.byId("timeInText").setText(oData.TimeIn);
+                oView.byId("timeOutText").setText(oData.TimeOut);
+                oView.byId("appTimeText").setText(oData.AppTime);
+                oView.byId("remarksText").setText(oData.Remarks);
+
+                oDialog.open();
+            }.bind(this),
+            error: function () {
+                // Handle error
+            }
+        });
+    },
+
+    onCloseInplanningDialog: function () {
+        var oView = this.getView();
+        var oDialog = oView.byId("inplanningDialog");
+        oDialog.close();
+    },
+
       handleSortButtonPressed: function () {
         this.getViewSettingsDialog(
           "ap.shipmentmanagement.fragments.sortDialog"
