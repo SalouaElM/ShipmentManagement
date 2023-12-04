@@ -21,13 +21,7 @@
         <headerContent>
 			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
 				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Main Category"/>
-				</m:VBox>
-				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Subcategory"/>
-				</m:VBox>
-				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Price"/>
+					<m:Label text="Shipment ID"/>
 				</m:VBox>
 			</m:FlexBox>
 		</headerContent>
@@ -47,9 +41,8 @@
 								columnsL="1"
 								columnsM="1">
 								<form:content>
-									<m:Label text="Product ID"/>
-									<m:Label text="Description"/>
-									<m:Label text="Supplier"/>
+									<m:Label text="{shipmentSet>Tknum}"/>
+									
 								</form:content>
 							</form:SimpleForm>
 						</blocks>
@@ -57,11 +50,56 @@
 				</subSections>
 			</ObjectPageSection>
 
-			<ObjectPageSection title="Suppliers">
+			<ObjectPageSection title="Deliveries">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:Text text="Here comes the sales data table"/>
+						<!--beginning of deliveries table-->
+							<m:Table
+    id="deliveryTable"
+    items="{ShipmentSet('tknum')/DeliverySet}"
+>
+    <m:headerToolbar>
+        <m:OverflowToolbar>
+            <m:Title text="Deliveries" level="H2"/>
+            <m:ToolbarSpacer/>
+            
+        </m:OverflowToolbar>
+    </m:headerToolbar>
+    <m:columns>
+        <m:Column
+            id="tknumCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="ShipmentNr" />
+            </m:VBox>
+        </m:Column>
+		<m:Column
+            id="vbelnCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="DeliveryNr" />
+            </m:VBox>
+        </m:Column>
+        <m:Column
+            id="posnrCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="DeliveryItemNr" />
+            </m:VBox>
+        </m:Column>
+    </m:columns>
+    <m:items>
+        <m:ColumnListItem  vAlign="Middle">
+            <m:cells>
+                <m:Text text="{Tknum}" />
+                <m:Text text="{DeliverySet.Vbeln}" />
+				<m:Text text="{DeliverySet.Posnr}" />
+            </m:cells>
+        </m:ColumnListItem>
+    </m:items>
+</m:Table>
+<!-- end of deliveries table -->
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
