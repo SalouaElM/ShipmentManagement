@@ -20,9 +20,10 @@ sap.ui.define(
         },
         _onShipmentMatched: function (oEvent) {
           let sTknum = oEvent.getParameter("arguments").shipment || "0";
+          console.log("Shipment ID:", sTknum); // Log the value
           this.getView().bindElement({
-            path: `/ShipmentSet('${sTknum}')`,
-            model: "",
+            path: `/ShipmentSet('${sTknum}')`, //   `/ShipmentSet('${sTknum}')?$expand=DeliverySet`
+            //model: "",
           });
         },
 

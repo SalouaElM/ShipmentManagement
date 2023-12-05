@@ -22,6 +22,7 @@
 			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
 				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					<m:Label text="Shipment ID"/>
+					<m:Label text="{Tknum}"/>
 				</m:VBox>
 			</m:FlexBox>
 		</headerContent>
@@ -41,7 +42,9 @@
 								columnsL="1"
 								columnsM="1">
 								<form:content>
-									<m:Label text="{shipmentSet>Tknum}"/>
+								<m:Label text="this is a test"/>
+									<m:Label text="{Tknum}"/>
+									<m:Label text="{Vbeln}"/>
 									
 								</form:content>
 							</form:SimpleForm>
@@ -54,11 +57,18 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-						<!--beginning of deliveries table-->
+						<!--beginning of deliveries table
+						
+						<m:Table
+    id="deliveryTable"
+    items='{/DeliverySet}'
+>
+						-->
 							<m:Table
     id="deliveryTable"
-    items="{ShipmentSet('tknum')/DeliverySet}"
+	items="{>/DeliverySet}"
 >
+<!--error with above 2023-12-05 14:55:11.875000 Request failed with status code 404: GET ShipmentSet('1001')/>/DeliverySet/$count?sap-client=238 - [{"code":"00505692409C1ED98BC4D3E4C61A94DA","message":"Resource not found for URI segment","persistent":false,"targets":["/ShipmentSet('1001')/>/DeliverySet/$count"],"type":"Error"}] sap.ui.model.odata.ODataMessageParser-->
     <m:headerToolbar>
         <m:OverflowToolbar>
             <m:Title text="Deliveries" level="H2"/>
@@ -92,9 +102,9 @@
     <m:items>
         <m:ColumnListItem  vAlign="Middle">
             <m:cells>
-                <m:Text text="{Tknum}" />
-                <m:Text text="{DeliverySet.Vbeln}" />
-				<m:Text text="{DeliverySet.Posnr}" />
+                <m:Text text="{>Tknum}" />
+                <m:Text text="{DeliverySet>Vbeln}" />
+				<m:Text text="{Posnr}" />
             </m:cells>
         </m:ColumnListItem>
     </m:items>
