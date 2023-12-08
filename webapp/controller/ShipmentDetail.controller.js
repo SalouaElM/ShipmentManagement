@@ -33,6 +33,12 @@ sap.ui.define(
             path: sShipmentPath + "/DeliverySet",
             template: oTable.getBindingInfo("items").template,
           });
+          
+          var oTable2 = this.getView().byId("deliveryTabledd"); // Ensure the correct table ID is used
+          oTable2.bindItems({
+            path: sShipmentPath + "/DeliverySet/DeliveryItemSet",
+            template: oTable2.getBindingInfo("items").template,
+          });
         },
 
         onExit: function () {
@@ -47,7 +53,6 @@ sap.ui.define(
           this.getOwnerComponent().getRouter().navTo("master");
       },
       onListItemPress2: function(oEvent){
-        this.getView().addDependent(this.oDialog);
           var oContext = oEvent.getSource().getBindingContext();
 
           // // Ensure oContext is valid before proceeding
@@ -55,10 +60,21 @@ sap.ui.define(
           //     // Handle the error or return
           //     return;
           // }
+          if(this.oDialog){
+            this.getView().addDependent(this.oDialog);
+          }
+          else 
+          {this.oDialog = sap.ui.xmlfragment(
+            "ap.shipmentmanagement.fragments.Items",
+            this
+          );
+        }
 
           let oOfferModel = new sap.ui.model.json.JSONModel(oContext.getObject());
 
           this.getView().setModel(oOfferModel, "offerModel");
+
+                    
           this.oDialog.open()
       },
       onCloseDialog: function(oEvent){

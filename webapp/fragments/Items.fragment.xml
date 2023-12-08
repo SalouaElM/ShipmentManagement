@@ -1,14 +1,14 @@
 <core:FragmentDefinition
-    xmlns="sap.m"
+    xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
 >
-    <Dialog
-        title="Items {Id}"
+    <m:Dialog
+        title="Items"
         type="Standard"
     >
         <m:Table
-    id="deliveryTable"
-	items="{ShipmentSet>DeliverySet/results}"
+    id="deliveryTabledd"
+	 items="{path: 'ShipmentSet>DeliverySet>DeliveryItemSet/results'}"
 >  
 <m:headerToolbar>
         <m:OverflowToolbar>
@@ -19,35 +19,35 @@
     </m:headerToolbar>
     <m:columns>
         <m:Column
-            id="vbelnCol"
+            id="vbeln_Col"
             width="12em">
             <m:VBox>
                 <m:Text text="DeliveryNr" />
             </m:VBox>
         </m:Column>
 		<m:Column
-            id="posnrCol"
+            id="posnr_Col"
             width="12em">
             <m:VBox>
                 <m:Text text="ItemNr" />
             </m:VBox>
         </m:Column>
         <m:Column
-            id="matnrCol"
+            id="matnr_Col"
             width="12em">
             <m:VBox>
                 <m:Text text="MaterialNr" />
             </m:VBox>
         </m:Column>
 		  <m:Column
-            id="vrkmeCol"
+            id="vrkme_Col"
             width="12em">
             <m:VBox>
                 <m:Text text="Sales Unit" />
             </m:VBox>
         </m:Column>
         <m:Column
-            id="lfimgCol"
+            id="lfimg_Col"
             width="12em">
             <m:VBox>
                 <m:Text text="Delivered Quantity" />
@@ -66,5 +66,8 @@
         </m:ColumnListItem>
     </m:items>
 </m:Table>
-    </Dialog>
+<m:HBox justifyContent="End" class="buttonstyle">
+    <m:Button text="Close" press=".onCloseDialog"/>
+  </m:HBox>
+    </m:Dialog>
 </core:FragmentDefinition>
