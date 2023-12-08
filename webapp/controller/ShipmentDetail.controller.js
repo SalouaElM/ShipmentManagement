@@ -24,7 +24,7 @@ sap.ui.define(
 
           this.getView().bindElement({
             path: sShipmentPath,
-            model: "",
+            //model: " ",
           });
 
           var oTable = this.getView().byId("deliveryTable");
@@ -32,6 +32,25 @@ sap.ui.define(
             path: sShipmentPath + "/DeliverySet",
             template: oTable.getBindingInfo("items").template,
           });
+        },
+        formatTime: function (oTime) {
+          if (!oTime || !oTime.ms) {
+            return "";
+          }
+          var time = oTime.ms / 1000; // Convert milliseconds to seconds
+          var hours = Math.floor(time / 3600);
+          var minutes = Math.floor((time % 3600) / 60);
+          var seconds = Math.floor(time % 60);
+
+          // Format the time
+          var formattedTime =
+            hours.toString().padStart(2, "0") +
+            ":" +
+            minutes.toString().padStart(2, "0") +
+            ":" +
+            seconds.toString().padStart(2, "0");
+
+          return formattedTime;
         },
 
         onExit: function () {
