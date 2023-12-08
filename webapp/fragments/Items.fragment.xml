@@ -1,0 +1,70 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="Items {Id}"
+        type="Standard"
+    >
+        <m:Table
+    id="deliveryTable"
+	items="{ShipmentSet>DeliverySet/results}"
+>  
+<m:headerToolbar>
+        <m:OverflowToolbar>
+            <m:Title text="Delivery Items" level="H2"/>
+            <m:ToolbarSpacer/>
+            
+        </m:OverflowToolbar>
+    </m:headerToolbar>
+    <m:columns>
+        <m:Column
+            id="vbelnCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="DeliveryNr" />
+            </m:VBox>
+        </m:Column>
+		<m:Column
+            id="posnrCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="ItemNr" />
+            </m:VBox>
+        </m:Column>
+        <m:Column
+            id="matnrCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="MaterialNr" />
+            </m:VBox>
+        </m:Column>
+		  <m:Column
+            id="vrkmeCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="Sales Unit" />
+            </m:VBox>
+        </m:Column>
+        <m:Column
+            id="lfimgCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="Delivered Quantity" />
+            </m:VBox>
+        </m:Column>
+    </m:columns>
+    <m:items>
+        <m:ColumnListItem vAlign="Middle">
+            <m:cells>
+                <m:ObjectIdentifier title="{Vbeln}" />
+                <m:ObjectIdentifier title="{Posnr}" />
+				<m:Text text="{Matnr}" />
+				<m:Text text="{Vrkme}" />
+                <m:Text text="{Lfimg}" />
+            </m:cells>
+        </m:ColumnListItem>
+    </m:items>
+</m:Table>
+    </Dialog>
+</core:FragmentDefinition>
