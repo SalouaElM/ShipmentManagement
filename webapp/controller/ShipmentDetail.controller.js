@@ -19,11 +19,18 @@ sap.ui.define(
             .attachPatternMatched(this._onShipmentMatched, this);
         },
         _onShipmentMatched: function (oEvent) {
-          let sTknum = oEvent.getParameter("arguments").shipment || "0";
-          console.log("Shipment ID:", sTknum); // Log the value
+          var sShipmentID = oEvent.getParameter("arguments").shipment || "0";
+          var sShipmentPath = `/ShipmentSet('${sShipmentID}')`;
+
           this.getView().bindElement({
-            path: `/ShipmentSet('${sTknum}')`, //   `/ShipmentSet('${sTknum}')?$expand=DeliverySet`
-            //model: "",
+            path: sShipmentPath,
+            model: "",
+          });
+
+          var oTable = this.getView().byId("deliveryTable");
+          oTable.bindItems({
+            path: sShipmentPath + "/DeliverySet",
+            template: oTable.getBindingInfo("items").template,
           });
         },
 

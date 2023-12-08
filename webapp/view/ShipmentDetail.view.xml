@@ -57,16 +57,10 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-						<!--beginning of deliveries table
-						
-						<m:Table
-    id="deliveryTable"
-    items='{/DeliverySet}'
->
-						-->
+	
 							<m:Table
     id="deliveryTable"
-	items="{>/DeliverySet}"
+	items="{ShipmentSet>DeliverySet/results}"
 >
 <!--error with above 2023-12-05 14:55:11.875000 Request failed with status code 404: GET ShipmentSet('1001')/>/DeliverySet/$count?sap-client=238 - [{"code":"00505692409C1ED98BC4D3E4C61A94DA","message":"Resource not found for URI segment","persistent":false,"targets":["/ShipmentSet('1001')/>/DeliverySet/$count"],"type":"Error"}] sap.ui.model.odata.ODataMessageParser-->
     <m:headerToolbar>
@@ -92,19 +86,27 @@
             </m:VBox>
         </m:Column>
         <m:Column
-            id="posnrCol"
+            id="vstelCol"
             width="12em">
             <m:VBox>
-                <m:Text text="DeliveryItemNr" />
+                <m:Text text="Shippingpoint" />
+            </m:VBox>
+        </m:Column>
+		  <m:Column
+            id="werksCol"
+            width="12em">
+            <m:VBox>
+                <m:Text text="PlantNr" />
             </m:VBox>
         </m:Column>
     </m:columns>
     <m:items>
         <m:ColumnListItem  vAlign="Middle">
             <m:cells>
-                <m:Text text="{>Tknum}" />
-                <m:Text text="{DeliverySet>Vbeln}" />
-				<m:Text text="{Posnr}" />
+                <m:Text text="{Tknum}" />
+                <m:Text text="{Vbeln}" />
+				<m:Text text="{Vstel}" />
+				<m:Text text="{Werks}" />
             </m:cells>
         </m:ColumnListItem>
     </m:items>
