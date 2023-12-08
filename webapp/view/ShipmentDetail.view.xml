@@ -68,7 +68,11 @@
         <m:OverflowToolbar>
             <m:Title text="Deliveries" level="H2"/>
             <m:ToolbarSpacer/>
-            
+					<m:Button
+						tooltip="Sort"
+						icon="sap-icon://sort"
+						press="handleSortButtonPressed"/>
+
         </m:OverflowToolbar>
     </m:headerToolbar>
     <m:columns>
