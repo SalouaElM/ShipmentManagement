@@ -1,1 +1,42 @@
-/* Enter your custom styles here */
+/* Remove border from the button */
+.customButton {
+    border: none !important;
+    background-color: white !important;
+    padding: 0 !important; /* Remove padding */
+    overflow: hidden; /* Hide overflow content */
+    box-shadow: none !important; /* Remove any box shadow */
+    border-radius: 0 !important; /* Remove border radius if present */
+}
+
+.customButton .sapMBtnInner {
+    border: none !important;
+    background-color: white !important;
+    padding: 0 !important; /* Remove padding */
+    overflow: hidden; /* Hide overflow content */
+}
+
+.customButton:hover {
+    background-color: #eaecee !important; /* Change to the desired gray color */
+    /* Add any other styles for hover state */
+    padding: 0 !important; /* Remove padding */
+    overflow: hidden; /* Hide overflow content */
+}
+/* status coloring */
+.iconButton .sapMBtnIcon:before {
+    color: red !important; /* Default color for the icon */
+}
+/* Color for message-error icon */
+.iconButton .sapMBtnIcon[sap-ui-icon='sap-icon://message-error']:before {
+    color: red !important;
+}
+
+/* Color for alert icon */
+.iconButton .sapMBtnIcon[sap-ui-icon='sap-icon://alert']:before {
+    color: yellow !important;
+}
+
+/* Color for status-completed icon */
+.iconButton .sapMBtnIcon[sap-ui-icon='sap-icon://status-completed']:before {
+    color: green !important;
+}
+

@@ -5,10 +5,10 @@
 		confirm="handleSortDialogConfirm">
 		<sortItems>
 			<ViewSettingsItem text="ShipmentNr" key="Tknum" selected="true" />
-			<ViewSettingsItem text="Created On" key="Erdat" />
-			<ViewSettingsItem text="Planning Point" key="Tplst" />
-			<ViewSettingsItem text="Shipment Type" key="Shtyp" />
-            <ViewSettingsItem text="Category" key="Vbtyp" />
+			<ViewSettingsItem text="Time In" key="TimeIn" />
+			<ViewSettingsItem text="Time Out" key="TimeOut" />
+			<ViewSettingsItem text="App Time" key="AppTime" />
+            <ViewSettingsItem text="Remarks" key="Remarks" />
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>
