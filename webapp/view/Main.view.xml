@@ -1,4 +1,4 @@
-<mvc:View controllerName="ap.shipmentmanagement.controller.Main"
+<mvc:View xmlns:core="sap.ui.core" controllerName="ap.shipmentmanagement.controller.Main"
     xmlns="sap.m"
     xmlns:f="sap.f"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
@@ -37,9 +37,19 @@
                         id="timeinCol"
                         minScreenWidth="Tablet"
                         demandPopin="true"
-                        hAlign="End"
+                        hAlign="Begin"
                     >
+                    
                         <Text text="Time In" />
+                    </Column>
+                    <Column
+                        id="timeiniconCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Begin"
+                    >
+                    
+                        <Text text="" />
                     </Column>
                     <Column
                         id="timeoutCol"
@@ -55,7 +65,7 @@
                         demandPopin="true"
                         hAlign="End"
                     >
-                        <Text text="Completion Time" />
+                        <Text text="Completed At" />
                     </Column>
                     <Column
                         id="statusCol"
@@ -109,19 +119,17 @@
                             <layoutData>
                                 <FlexItemData growFactor="1" />
                             </layoutData>
-                                </Button>
-                            <Text text="{path: 'TimeIn', formatter: '.formatTime'}" class="{= ${Streg} === 'X' ? 'greenBackground' : ''}" />
+                            </Button>
+                            <Text text="{path: 'TimeIn', formatter: '.formatTime'}"/>
+                            <core:Icon
+                                src="sap-icon://{= ${Streg} === 'X' ? 'status-completed' : 'message-error'}"
+                                color="{= ${Streg} === 'X' ? 'green' : 'red'}"
+                            />
                             <Text text="{path: 'TimeOut', formatter: '.formatTime'}" />
                             <Text text="{path: 'Uzabf', formatter: '.formatTime'}" />
-                            <Button
-                                xmlns="sap.m"
-                                icon="{
-                                    parts: [
-                                        { path: 'Stabf' },
-                                        { path: 'Stlbg' }
-                                    ],
-                                    formatter: '.getStatusButton'
-                                }" class="iconButton"
+                            <core:Icon
+                                src="sap-icon://{= ${Stabf} === 'X' ? 'status-completed' : (${Stlbg} === 'X' ? 'alert' : 'message-error')}"
+                                color="{= ${Stabf} === 'X' ? 'green' : (${Stlbg} === 'X' ? 'yellow' : 'red')}"
                             />
                             <Text text="{Tdlnr}" />
                             <Text text="{path: 'AppTime', formatter: '.formatTime'}" />
