@@ -103,8 +103,8 @@
     <m:items>
         <m:ColumnListItem  vAlign="Middle">
             <m:cells>
-                <m:Text text="{Tknum}" />
-                <m:Text text="{Vbeln}" />
+                <m:ObjectIdentifier title="{Tknum}" />
+                <m:ObjectIdentifier title="{Vbeln}" />
 				<m:Text text="{Vstel}" />
 				<m:Text text="{Werks}" />
             </m:cells>
