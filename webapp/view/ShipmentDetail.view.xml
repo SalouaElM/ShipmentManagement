@@ -65,7 +65,7 @@
 <!--error with above 2023-12-05 14:55:11.875000 Request failed with status code 404: GET ShipmentSet('1001')/>/DeliverySet/$count?sap-client=238 - [{"code":"00505692409C1ED98BC4D3E4C61A94DA","message":"Resource not found for URI segment","persistent":false,"targets":["/ShipmentSet('1001')/>/DeliverySet/$count"],"type":"Error"}] sap.ui.model.odata.ODataMessageParser-->
     <m:headerToolbar>
         <m:OverflowToolbar>
-            <m:Title text="Deliveries" level="H2"/>
+            <m:Title text="DeliveryMenu" level="H2"/>
             <m:ToolbarSpacer/>
             
         </m:OverflowToolbar>
