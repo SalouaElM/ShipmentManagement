@@ -21,108 +21,134 @@
             </ObjectPageDynamicHeaderTitle>
         </headerTitle>
         <headerContent>
-			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
-				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Shipment"/>
-					<m:Text text="{Tknum}"/>
-				</m:VBox>
-			</m:FlexBox>
-		</headerContent>
+            <m:FlexBox
+                wrap="Wrap"
+                fitContainer="true"
+                alignItems="Stretch"
+            >
+                <m:VBox
+                    justifyContent="Center"
+                    class="sapUiSmallMarginEnd"
+                >
+                    <m:Label text="Shipment" />
+                    <m:Text text="{Tknum}" />
+                </m:VBox>
+            </m:FlexBox>
+        </headerContent>
         <sections>
-			<ObjectPageSection title="General Information">
-				<subSections>
-					<ObjectPageSubSection>
-						<blocks>
-							<form:SimpleForm
-								maxContainerCols="2"
-								editable="false"
-								layout="ResponsiveGridLayout"
-								labelSpanL="12"
-								labelSpanM="12"
-								emptySpanL="0"
-								emptySpanM="0"
-								columnsL="1"
-								columnsM="1">
-								<form:content>
-								
-									<m:Text text="ShipmentNr: {Tknum}"/>	
-									<m:Text text="Time in: {path: 'TimeIn', formatter: '.formatTime'}"/>
-									<m:Text text="Time out: {path: 'TimeOut', formatter: '.formatTime'}"/>
-									<m:Text text="App time: {path: 'AppTime', formatter: '.formatTime'}"/>
-									<m:Text text="remarks: {Remarks}"/>
-								</form:content>
-							</form:SimpleForm>
-						</blocks>
-					</ObjectPageSubSection>
-				</subSections>
-			</ObjectPageSection>
+            <ObjectPageSection title="General Information">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm
+                                maxContainerCols="2"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                                labelSpanL="12"
+                                labelSpanM="12"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                columnsL="1"
+                                columnsM="1"
+                            >
+                                <form:content>
+                                    <m:Text text="ShipmentNr: {Tknum}" />
+                                    <m:Text
+                                        text="Time in: {path: 'TimeIn', formatter: '.formatTime'}"
+                                    />
+                                    <m:Text
+                                        text="Time out: {path: 'TimeOut', formatter: '.formatTime'}"
+                                    />
+                                    <m:Text
+                                        text="App time: {path: 'AppTime', formatter: '.formatTime'}"
+                                    />
+                                    <m:Text text="remarks: {Remarks}" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
 
-			<ObjectPageSection title="Deliveries">
-				<subSections>
-					<ObjectPageSubSection>
-						<blocks>
-	
-							<m:Table
-    id="deliveryTable"
-	items="{ShipmentSet>DeliverySet/results}"
->
-    <m:headerToolbar>
-        <m:OverflowToolbar>
-            <m:Title text="Deliveries" level="H2"/>
-            <m:ToolbarSpacer/>
-					<m:Button
-						tooltip="Sort"
-						icon="sap-icon://sort"
-						press="handleSortButtonPressed"/>
-
-        </m:OverflowToolbar>
-    </m:headerToolbar>
-    <m:columns>
-        <m:Column
-            id="tknumCol"
-            width="12em">
-            <m:VBox>
-                <m:Text text="ShipmentNr" />
-            </m:VBox>
-        </m:Column>
-		<m:Column
-            id="vbelnCol"
-            width="12em">
-            <m:VBox>
-                <m:Text text="DeliveryNr" />
-            </m:VBox>
-        </m:Column>
-        <m:Column
-            id="vstelCol"
-            width="12em">
-            <m:VBox>
-                <m:Text text="Shippingpoint" />
-            </m:VBox>
-        </m:Column>
-		  <m:Column
-            id="werksCol"
-            width="12em">
-            <m:VBox>
-                <m:Text text="PlantNr" />
-            </m:VBox>
-        </m:Column>
-    </m:columns>
-    <m:items>
-        <m:ColumnListItem  vAlign="Middle">
-            <m:cells>
-                <m:ObjectIdentifier title="{Tknum}" />
-                <m:ObjectIdentifier title="{Vbeln}" />
-				<m:Text text="{Vstel}" />
-				<m:Text text="{Werks}" />
-            </m:cells>
-        </m:ColumnListItem>
-    </m:items>
-</m:Table>
-<!-- end of deliveries table -->
-						</blocks>
-					</ObjectPageSubSection>
-				</subSections>
-			</ObjectPageSection>
-		</sections>
-	</ObjectPageLayout>
+            <ObjectPageSection title="Deliveries">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:Table
+                                id="deliveryTable"
+                                items="{ShipmentSet>DeliverySet/results}"
+                            >
+                                <m:headerToolbar>
+                                    <m:OverflowToolbar>
+                                        <m:Title
+                                            text="Deliveries"
+                                            level="H2"
+                                        />
+                                        <m:ToolbarSpacer />
+                                        <m:Button
+                                            tooltip="Sort"
+                                            icon="sap-icon://sort"
+                                            press="handleSortButtonPressed"
+                                        />
+                                    </m:OverflowToolbar>
+                                </m:headerToolbar>
+                                <m:columns>
+                                    <m:Column
+                                        id="tknumCol"
+                                        width="12em"
+                                    >
+                                        <m:VBox>
+                                            <m:Text text="ShipmentNr" />
+                                        </m:VBox>
+                                    </m:Column>
+                                    <m:Column
+                                        id="vbelnCol"
+                                        width="12em"
+                                    >
+                                        <m:VBox>
+                                            <m:Text text="DeliveryNr" />
+                                        </m:VBox>
+                                    </m:Column>
+                                    <m:Column
+                                        id="vstelCol"
+                                        width="12em"
+                                    >
+                                        <m:VBox>
+                                            <m:Text text="Shippingpoint" />
+                                        </m:VBox>
+                                    </m:Column>
+                                    <m:Column
+                                        id="werksCol"
+                                        width="12em"
+                                    >
+                                        <m:VBox>
+                                            <m:Text text="PlantNr" />
+                                        </m:VBox>
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem 
+                                        type="Navigation"
+                                        vAlign="Middle"
+                                        press=".onListItemPress2">
+                                        <m:cells>
+                                            <m:ObjectIdentifier
+                                                title="{Tknum}"
+                                            />
+                                            <m:ObjectIdentifier
+                                                title="{Vbeln}"
+                                            />
+                                            <m:Text text="{Vstel}" />
+                                            <m:Text text="{Werks}" />
+                                        </m:cells>
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                            <!-- end of deliveries table -->
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
 </mvc:View>
