@@ -1,10 +1,143 @@
 <mvc:View controllerName="ap.shipmentmanagement.controller.Log"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
     <Page id="page">
         <content>
             <Button icon="sap-icon://shipping-status" text="Nav to Shipments" type="Transparent" press="onNavToShipments" />
-
+            <Table
+                id="shipmentLogTable"
+                items="{/ShipmentLogSet}"
+            >
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title
+                            text="Shipment Planning Log"
+                            level="H2"
+                        />
+                        <ToolbarSpacer />
+                        <Button
+                            tooltip="Sort"
+                            icon="sap-icon://sort"
+                            press="handleSortButtonPressed2"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column
+                        id="tknum_Col"
+                        width="12em"
+                    >
+                        <VBox>
+                            <Text text="ShipmentNr" />
+                        </VBox>
+                    </Column>
+                    <Column
+                        id="status_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Status" />
+                    </Column>
+                    <Column
+                        id="tdlnr_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Transporteur" />
+                    </Column>
+                    <Column
+                        id="signi_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Container ID" />
+                    </Column>
+                    <Column
+                        id="timein_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Time In" />
+                    </Column>
+                    <Column
+                        id="timeout_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Time Out" />
+                    </Column>
+                    <Column
+                        id="upabfCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="Planned Proctime" />
+                    </Column>
+                    <Column
+                        id="uzabfCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Real Proctime" />
+                    </Column>
+                    <Column
+                        id="rating_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Begin"
+                    >
+                        <Text text="Rating" />
+                    </Column>
+                    <Column
+                        id="remarks_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Remarks" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem
+                        vAlign="Middle"
+                    >
+                        <cells>
+                            <ObjectIdentifier title="{Tknum}"/>
+                            <core:Icon
+                                src="sap-icon://{= ${TimeIn} ? (${TimeOut} ? 'status-completed' : 'alert') : 'message-error'}"
+                                color="{= ${TimeIn} ? (${TimeOut} ? 'green' : 'yellow') : 'red'}"
+                            />
+                            <Text text="{Tdlnr}" />
+                            <Text text="{Signi}" />
+                            <Text
+                                text="{path: 'TimeIn', formatter: '.formatTime'}"
+                            />
+                            <Text
+                                text="{path: 'TimeOut', formatter: '.formatTime'}"
+                            />
+                            <Text
+                                text="{path: 'Upabf', formatter: '.formatTime'}"
+                            />
+                            <Text
+                                text="{path: 'Uzabf', formatter: '.formatTime'}"
+                            />
+                            <core:Icon
+                                src="sap-icon://{= !${TimeIn} ? (${TimeOut} ? 'status-completed' : 'alert') : 'message-error'}"
+                                color="{= !${TimeIn} ? (${TimeOut} ? 'green' : 'yellow') : 'red'}"
+                            />
+                            <Text text="{Remarks}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
         </content>
     </Page>
 </mvc:View>
