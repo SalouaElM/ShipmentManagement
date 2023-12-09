@@ -1,0 +1,10 @@
+<mvc:View controllerName="ap.shipmentmanagement.controller.Log"
+    xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+    <Page id="page">
+        <content>
+            <Button icon="sap-icon://shipping-status" text="Nav to Shipments" type="Transparent" press="onNavToShipments" />
+
+        </content>
+    </Page>
+</mvc:View>
