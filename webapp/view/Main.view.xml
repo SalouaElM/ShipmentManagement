@@ -1,45 +1,63 @@
-<mvc:View controllerName="ap.shipmentmanagement.controller.Main"
+<mvc:View
+    xmlns:core="sap.ui.core"
+    controllerName="ap.shipmentmanagement.controller.Main"
     xmlns="sap.m"
     xmlns:f="sap.f"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
-    <Page id="page" title="{i18n>title}">
-         <content>
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content>
             <Table
                 id="shipmentTable"
                 items="{/ShipmentSet}"
             >
-            <headerToolbar>
-				<OverflowToolbar>
-					<Title text="Shipments" level="H2"/>
-					<ToolbarSpacer/>
-					<Button
-						tooltip="Sort"
-						icon="sap-icon://sort"
-						press="handleSortButtonPressed"/>
-					<Button
-						tooltip="Filter"
-						icon="sap-icon://filter"
-						press="handleFilterButtonPressed"/>
-
-				</OverflowToolbar>
-			</headerToolbar>
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title
+                            text="Shipments"
+                            level="H2"
+                        />
+                        <ToolbarSpacer />
+                        <Button
+                            tooltip="Sort"
+                            icon="sap-icon://sort"
+                            press="handleSortButtonPressed"
+                        />
+                        <Button
+                            tooltip="Filter"
+                            icon="sap-icon://filter"
+                            press="handleFilterButtonPressed"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
                 <columns>
                     <Column
                         id="tknumCol"
                         width="12em"
-                        
                     >
                         <VBox>
                             <Text text="ShipmentNr" />
                         </VBox>
                     </Column>
-                      <Column
+                    <Column
                         id="timeinCol"
                         minScreenWidth="Tablet"
                         demandPopin="true"
-                        hAlign="End"
+                        hAlign="Begin"
                     >
                         <Text text="Time In" />
+                    </Column>
+                    <Column
+                        id="timeiniconCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Begin"
+                    >
+                        <Text text="" />
                     </Column>
                     <Column
                         id="timeoutCol"
@@ -55,7 +73,7 @@
                         demandPopin="true"
                         hAlign="End"
                     >
-                        <Text text="Completion Time" />
+                        <Text text="Completed At" />
                     </Column>
                     <Column
                         id="statusCol"
@@ -99,32 +117,43 @@
                     </Column>
                 </columns>
                 <items>
-                    <ColumnListItem type="Navigation" vAlign="Middle" press=".onListItemPress">
+                    <ColumnListItem
+                        type="Navigation"
+                        vAlign="Middle"
+                        press=".onListItemPress"
+                    >
                         <cells>
-                           <Button text="{Tknum}"
+                            <Button
+                                text="{Tknum}"
                                 press="onTknumClick"
                                 ariaDescribedBy="defaultButtonDescription genericButtonDescription"
                                 class="customButton"
-                                >
-                            <layoutData>
-                                <FlexItemData growFactor="1" />
-                            </layoutData>
-                                </Button>
-                            <Text text="{path: 'TimeIn', formatter: '.formatTime'}" class="{= ${Streg} === 'X' ? 'greenBackground' : ''}" />
-                            <Text text="{path: 'TimeOut', formatter: '.formatTime'}" />
-                            <Text text="{path: 'Uzabf', formatter: '.formatTime'}" />
-                            <Button
-                                xmlns="sap.m"
-                                icon="{
-                                    parts: [
-                                        { path: 'Stabf' },
-                                        { path: 'Stlbg' }
-                                    ],
-                                    formatter: '.getStatusButton'
-                                }" class="iconButton"
+                            >
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Button>
+                            <Text
+                                text="{path: 'TimeIn', formatter: '.formatTime'}"
+                            />
+                            <core:Icon
+                                src="sap-icon://{= ${Streg} !== 'X' ? (!${TimeIn} ? 'status-completed' : 'message-success') : 'message-error'}"
+                                color="{= ${Streg} !== 'X' ? (!${TimeIn} ? 'green' : 'green') : 'red'}"
+                            />
+                            <Text
+                                text="{path: 'TimeOut', formatter: '.formatTime'}"
+                            />
+                            <Text
+                                text="{path: 'Uzabf', formatter: '.formatTime'}"
+                            />
+                            <core:Icon
+                                src="sap-icon://{= ${Stabf} === 'X' ? 'status-completed' : (${Stlbg} === 'X' ? 'alert' : 'message-error')}"
+                                color="{= ${Stabf} === 'X' ? 'green' : (${Stlbg} === 'X' ? 'yellow' : 'red')}"
                             />
                             <Text text="{Tdlnr}" />
-                            <Text text="{path: 'AppTime', formatter: '.formatTime'}" />
+                            <Text
+                                text="{path: 'AppTime', formatter: '.formatTime'}"
+                            />
                             <Text text="{Signi}" />
                             <Text text="{Remarks}" />
                         </cells>
@@ -132,23 +161,5 @@
                 </items>
             </Table>
         </content>
-        <!-- Dialog for displaying inplanning details -->
-        <Dialog id="inplanningDialog" title="Inplanning Shipment" contentWidth="auto" contentHeight="auto">
-            <VBox>
-                <Label text="Tknum:"/>
-                <Text id="tknumText" />
-                <Label text="Time In:" />
-                <Text id="timeInText" />
-                <Label text="Time Out:" />
-                <Text id="timeOutText" />
-                <Label text="App Time:" />
-                <Text id="appTimeText" />
-                <Label text="Remarks:" />
-                <Text id="remarksText" />
-            </VBox>
-            <beginButton>
-                <Button text="Close" press=".onCloseInplanningDialog" />
-            </beginButton>
-        </Dialog>
     </Page>
 </mvc:View>
