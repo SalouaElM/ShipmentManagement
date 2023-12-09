@@ -1,23 +1,25 @@
 <mvc:View
-	controllerName="ap.shipmentmanagement.controller.ShipmentDetail"
-	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.uxap"
-	xmlns:m="sap.m"
-	xmlns:f="sap.f"
-	xmlns:form="sap.ui.layout.form">
+    controllerName="ap.shipmentmanagement.controller.ShipmentDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+>
     <ObjectPageLayout
-		id="ObjectPageLayout"
-		showTitleInHeaderContent="true"
-		alwaysShowContentHeader="false"
-		preserveHeaderStateOnScroll="false"
-		headerContentPinnable="true"
-		isChildPage="true"
-		upperCaseAnchorBar="false">
+        id="ObjectPageLayout"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false"
+        preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true"
+        isChildPage="true"
+        upperCaseAnchorBar="false"
+    >
         <headerTitle>
-			<ObjectPageDynamicHeaderTitle>
-				<actions>
-				</actions>
-			</ObjectPageDynamicHeaderTitle>
-		</headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <actions />
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
         <headerContent>
 			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
 				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
