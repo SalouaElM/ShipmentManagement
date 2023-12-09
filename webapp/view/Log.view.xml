@@ -130,8 +130,8 @@
                                 text="{path: 'Uzabf', formatter: '.formatTime'}"
                             />
                             <core:Icon
-                                src="sap-icon://{= !${TimeIn} ? (${TimeOut} ? 'status-completed' : 'alert') : 'message-error'}"
-                                color="{= !${TimeIn} ? (${TimeOut} ? 'green' : 'yellow') : 'red'}"
+                                src="sap-icon://{= !${Upabf} ? (!${Uzapf} ? 'status-completed' : 'alert') : 'message-error'}"
+                                color="{= !${Upabf} ? (${Uzapf} ? 'green' : 'yellow') : 'red'}"
                             />
                             <Text text="{Remarks}" />
                         </cells>
