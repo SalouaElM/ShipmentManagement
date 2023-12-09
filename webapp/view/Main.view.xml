@@ -161,31 +161,5 @@
                 </items>
             </Table>
         </content>
-        <!-- Dialog for displaying inplanning details -->
-        <Dialog
-            id="inplanningDialog"
-            title="Inplanning Shipment"
-            contentWidth="auto"
-            contentHeight="auto"
-        >
-            <VBox>
-                <Label text="Tknum:" />
-                <Text id="tknumText" />
-                <Label text="Time In:" />
-                <Text id="timeInText" />
-                <Label text="Time Out:" />
-                <Text id="timeOutText" />
-                <Label text="App Time:" />
-                <Text id="appTimeText" />
-                <Label text="Remarks:" />
-                <Text id="remarksText" />
-            </VBox>
-            <beginButton>
-                <Button
-                    text="Close"
-                    press=".onCloseInplanningDialog"
-                />
-            </beginButton>
-        </Dialog>
     </Page>
 </mvc:View>

@@ -20,21 +20,21 @@ sap.ui.define(
       },
       formatTime: function (oTime) {
         if (!oTime || !oTime.ms) {
-            return "";
+          return "";
         }
         var time = oTime.ms / 1000; // Convert milliseconds to seconds
         var hours = Math.floor(time / 3600);
         var minutes = Math.floor((time % 3600) / 60);
         var seconds = Math.floor(time % 60);
-    
+
         // Format the time
         var formattedTime = hours.toString().padStart(2, '0') + ':' +
-            minutes.toString().padStart(2, '0') + ':' +
-            seconds.toString().padStart(2, '0');
-    
+          minutes.toString().padStart(2, '0') + ':' +
+          seconds.toString().padStart(2, '0');
+
         return formattedTime;
-    },
-    
+      },
+
 
       onListItemPress: function (oEvent) {
         //var oFCL = this.oView.getParent().getParent();
@@ -54,39 +54,77 @@ sap.ui.define(
         let oSelectedShipment = sShipmentPath.split("'")[1];
 
         this.openInplanningDialog(oSelectedShipment);
-    },
+      },
+      // Define oDialog as a member variable of the controller
+      oDialog: null,
 
       openInplanningDialog: function (oSelectedShipment) {
-        var oModel = this.getView().getModel(); // Assuming OData model is set on the view
+        var oModel = this.getView().getModel();
+      
         oModel.read("/ShipmentSet('" + oSelectedShipment + "')", {
-            success: function (oData) {
-                var oView = this.getView();
-                var oDialog = oView.byId("inplanningDialog");
-
-                var timeIn = oData.TimeIn ? this.formatTime(oData.TimeIn) : "";
-                var timeOut = oData.TimeOut ? this.formatTime(oData.TimeOut) : "";
-                var appTime = oData.AppTime ? this.formatTime(oData.AppTime) : "";
-    
-                // Set formatted values to the respective Text controls
-                oView.byId("tknumText").setText(oData.Tknum);
-                oView.byId("timeInText").setText(timeIn);
-                oView.byId("timeOutText").setText(timeOut);
-                oView.byId("appTimeText").setText(appTime);
-                oView.byId("remarksText").setText(oData.Remarks);
-                
-                oDialog.open();
-            }.bind(this),
-            error: function () {
-                // Handle error
+          success: function (oData) {
+            if (!this.oDialog) {
+              this.oDialog = sap.ui.xmlfragment("ap.shipmentmanagement.fragments.inplanningDialog", this);
+              this.getView().addDependent(this.oDialog);
             }
+      
+            this.oDialog.setModel(oModel);
+      
+            var oFragmentContent = this.oDialog.getContent()[0];
+      
+            if (oFragmentContent instanceof sap.m.VBox) {
+              var oTextTknum = oFragmentContent.getItems()[1];
+              var oTimeInPicker = oFragmentContent.getItems()[3];
+              var oTimeOutPicker = oFragmentContent.getItems()[5];
+              var oAppTimePicker = oFragmentContent.getItems()[7];
+              var oTextAreaRemarks = oFragmentContent.getItems()[9];
+      
+              oTextTknum.setText(oData.Tknum);
+      
+              function formatTime(oTime) {
+                if (!oTime || !oTime.ms) {
+                  return "";
+                }
+                var time = oTime.ms / 1000;
+                var hours = Math.floor(time / 3600);
+                var minutes = Math.floor((time % 3600) / 60);
+                var seconds = Math.floor(time % 60);
+                return hours.toString().padStart(2, '0') + ':' +
+                       minutes.toString().padStart(2, '0') + ':' +
+                       seconds.toString().padStart(2, '0');
+              }
+      
+              if (oData.TimeIn) {
+                var formattedTimeIn = formatTime(oData.TimeIn);
+                oTimeInPicker.setDateValue(new Date("01/01/1970 " + formattedTimeIn));
+                oTimeInPicker.setValue(formattedTimeIn);
+              }
+      
+              if (oData.TimeOut) {
+                var formattedTimeOut = formatTime(oData.TimeOut);
+                oTimeOutPicker.setDateValue(new Date("01/01/1970 " + formattedTimeOut));
+                oTimeOutPicker.setValue(formattedTimeOut);
+              }
+      
+              if (oData.AppTime) {
+                var formattedAppTime = formatTime(oData.AppTime);
+                oAppTimePicker.setDateValue(new Date("01/01/1970 " + formattedAppTime));
+                oAppTimePicker.setValue(formattedAppTime);
+              }
+      
+              oTextAreaRemarks.setValue(oData.Remarks);
+      
+              this.oDialog.open();
+            }
+          }.bind(this)
         });
-    },
-
-    onCloseInplanningDialog: function () {
-        var oView = this.getView();
-        var oDialog = oView.byId("inplanningDialog");
-        oDialog.close();
-    },
+      },
+      
+      onCloseInplanningDialog: function () {
+        if (this.oDialog) {
+          this.oDialog.close();
+        }
+      },
 
       handleSortButtonPressed: function () {
         this.getViewSettingsDialog(
@@ -153,23 +191,6 @@ sap.ui.define(
         oBinding.filter(aFilters);
       },
 
-        // logic to show the right icon.
-        getStatusButton: function(sStabf, sStlbg) {
-            let sIcon = 'sap-icon://alert'; // Default icon URI
-            let sIconClass = 'alertIcon'; // Default icon class
-
-            if (sStabf !== 'X' && sStlbg !== 'X') {
-                sIcon = 'sap-icon://message-error';
-            } else if (sStabf !== 'X' && sStlbg === 'X') {
-                sIcon = 'sap-icon://alert';
-            } else if (sStabf === 'X') {
-                sIcon = 'sap-icon://status-completed';
-            }
-        
-            return sIcon; // Return the URI string for the icon
-        },
-    
-    
     });
   }
 );
