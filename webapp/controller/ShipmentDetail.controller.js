@@ -25,19 +25,16 @@ sap.ui.define(
 
           this.getView().bindElement({
             path: sShipmentPath,
-            model: "",
           });
 
           var oTable = this.getView().byId("deliveryTable");
           oTable.bindItems({
             path: sShipmentPath + "/DeliverySet",
+            parameters: {
+              $expand: "DeliveryItemSet", // Expand DeliveryItemSet
+              $filter: "DeliveryItemSet/Vbeln eq Vbeln" // Apply filter on Vbeln field
+            },
             template: oTable.getBindingInfo("items").template,
-          });
-          
-          var oTable2 = this.getView().byId("deliveryTabledd"); // Ensure the correct table ID is used
-          oTable2.bindItems({
-            path: sShipmentPath + "/DeliverySet/DeliveryItemSet",
-            template: oTable2.getBindingInfo("items").template,
           });
         },
 
@@ -49,39 +46,45 @@ sap.ui.define(
             .getRoute("detail")
             .detachPatternMatched(this._onShipmentMatched, this);
         },
-        onNavToShipments: function(oEvent){
+        onNavToShipments: function (oEvent) {
           this.getOwnerComponent().getRouter().navTo("master");
-      },
-      onListItemPress2: function(oEvent){
+        },
+        onListItemPress2: function (oEvent) {
           var oContext = oEvent.getSource().getBindingContext();
+        
+          if (oContext) {
+            if (!this.oDialog) {
+              this.oDialog = sap.ui.xmlfragment("ap.shipmentmanagement.fragments.Items", this);
+              this.getView().addDependent(this.oDialog);
+            }
+        
+            var sPath = oContext.getPath();
+        
+            var oModel = this.getView().getModel();
+            oModel.read(sPath + "/DeliveryItemSet", {
+              success: function (oData) {
+                if (oData && oData.results) {
+                  // Process and use oData.results
+                  let oOfferModel = new sap.ui.model.json.JSONModel(oData.results);
+                  this.oDialog.setModel(oOfferModel, "offerModel");
 
-          // // Ensure oContext is valid before proceeding
-          // if (!oContext) {
-          //     // Handle the error or return
-          //     return;
-          // }
-          if(this.oDialog){
-            this.getView().addDependent(this.oDialog);
+                  this.oDialog.open();
+                } else {
+                  console.error("No data found for DeliveryItemSet");
+                }
+              }.bind(this),
+              error: function () {
+                console.error("Failed to fetch DeliveryItemSet data");
+              }
+            });
           }
-          else 
-          {this.oDialog = sap.ui.xmlfragment(
-            "ap.shipmentmanagement.fragments.Items",
-            this
-          );
-        }
+        },
 
-          let oOfferModel = new sap.ui.model.json.JSONModel(oContext.getObject());
-
-          this.getView().setModel(oOfferModel, "offerModel");
-
-                    
-          this.oDialog.open()
-      },
-      onCloseDialog: function(oEvent){
+        onCloseDialog: function (oEvent) {
 
           this.oDialog.close();
 
-      }
+        }
       }
     );
   }
