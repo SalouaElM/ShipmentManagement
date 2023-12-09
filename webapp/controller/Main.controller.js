@@ -190,6 +190,9 @@ sap.ui.define(
         // apply filter settings
         oBinding.filter(aFilters);
       },
+      onNavToLog: function(oEvent){
+        this.getOwnerComponent().getRouter().navTo("log");
+    },
 
     });
   }

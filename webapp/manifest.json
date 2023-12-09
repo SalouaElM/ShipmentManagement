@@ -131,7 +131,14 @@
                 "master",
                 "detail"
               ]
-            }
+            },
+            {
+                "pattern": "log",
+                "name": "log",
+                "target": [
+                  "log"
+                ]
+              }
           ],
           "targets": {
             "master": {
@@ -141,6 +148,10 @@
             "detail": {
               "viewName": "ShipmentDetail",
               "controlAggregation": "midColumnPages"
+            },
+            "log": {
+              "viewName": "Log",
+              "controlAggregation": "beginColumnPages"
             }
     }
         }}

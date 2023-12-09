@@ -1,0 +1,13 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSortDialogConfirm2">
+		<sortItems>
+			<ViewSettingsItem text="ShipmentNr" key="Tknum" selected="true" />
+			<ViewSettingsItem text="Time In" key="TimeIn" />
+			<ViewSettingsItem text="Time Out" key="TimeOut" />
+            <ViewSettingsItem text="Remarks" key="Remarks" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

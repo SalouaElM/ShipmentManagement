@@ -1,43 +1,31 @@
-<mvc:View
-    xmlns:core="sap.ui.core"
-    controllerName="ap.shipmentmanagement.controller.Main"
+<mvc:View controllerName="ap.shipmentmanagement.controller.Log"
     xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
->
-    <Page
-        id="page"
-        title="{i18n>title}"
-    >
+    xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+    <Page id="page">
         <content>
-        <Button icon="sap-icon://crm-service-manager" type="Transparent" press="onNavToLog" text="Nav to shipment log" />
+            <Button icon="sap-icon://shipping-status" text="Nav to Shipments" type="Transparent" press="onNavToShipments" />
             <Table
-                id="shipmentTable"
-                items="{/ShipmentSet}"
+                id="shipmentLogTable"
+                items="{/ShipmentLogSet}"
             >
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title
-                            text="Shipments"
+                            text="Shipment Planning Log"
                             level="H2"
                         />
                         <ToolbarSpacer />
                         <Button
                             tooltip="Sort"
                             icon="sap-icon://sort"
-                            press="handleSortButtonPressed"
-                        />
-                        <Button
-                            tooltip="Filter"
-                            icon="sap-icon://filter"
-                            press="handleFilterButtonPressed"
+                            press="handleSortButtonPressed2"
                         />
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
                     <Column
-                        id="tknumCol"
+                        id="tknum_Col"
                         width="12em"
                     >
                         <VBox>
@@ -45,23 +33,39 @@
                         </VBox>
                     </Column>
                     <Column
-                        id="timeinCol"
+                        id="status_Col"
                         minScreenWidth="Tablet"
                         demandPopin="true"
-                        hAlign="Begin"
+                        hAlign="Center"
+                    >
+                        <Text text="Status" />
+                    </Column>
+                    <Column
+                        id="tdlnr_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Transporteur" />
+                    </Column>
+                    <Column
+                        id="signi_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text text="Container ID" />
+                    </Column>
+                    <Column
+                        id="timein_Col"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
                     >
                         <Text text="Time In" />
                     </Column>
                     <Column
-                        id="timeiniconCol"
-                        minScreenWidth="Tablet"
-                        demandPopin="true"
-                        hAlign="Begin"
-                    >
-                        <Text text="" />
-                    </Column>
-                    <Column
-                        id="timeoutCol"
+                        id="timeout_Col"
                         minScreenWidth="Tablet"
                         demandPopin="true"
                         hAlign="End"
@@ -69,93 +73,66 @@
                         <Text text="Time Out" />
                     </Column>
                     <Column
-                        id="complCol"
+                        id="upabfCol"
                         minScreenWidth="Tablet"
                         demandPopin="true"
                         hAlign="End"
                     >
-                        <Text text="Completed At" />
+                        <Text text="Planned Proctime" />
                     </Column>
                     <Column
-                        id="statusCol"
+                        id="uzabfCol"
                         minScreenWidth="Tablet"
                         demandPopin="true"
-                        hAlign="End"
+                        hAlign="Center"
                     >
-                        <Text text="Status" />
+                        <Text text="Real Proctime" />
                     </Column>
                     <Column
-                        id="transporteurCol"
+                        id="rating_Col"
                         minScreenWidth="Tablet"
                         demandPopin="true"
-                        hAlign="End"
+                        hAlign="Begin"
                     >
-                        <Text text="Transporteur" />
+                        <Text text="Rating" />
                     </Column>
                     <Column
-                        id="apptimeCol"
+                        id="remarks_Col"
                         minScreenWidth="Tablet"
                         demandPopin="true"
-                        hAlign="End"
-                    >
-                        <Text text="App Time" />
-                    </Column>
-                    <Column
-                        id="containerCol"
-                        minScreenWidth="Tablet"
-                        demandPopin="true"
-                        hAlign="End"
-                    >
-                        <Text text="Container ID" />
-                    </Column>
-                    <Column
-                        id="remarksCol"
-                        minScreenWidth="Tablet"
-                        demandPopin="true"
-                        hAlign="End"
+                        hAlign="Center"
                     >
                         <Text text="Remarks" />
                     </Column>
                 </columns>
                 <items>
                     <ColumnListItem
-                        type="Navigation"
                         vAlign="Middle"
-                        press=".onListItemPress"
                     >
                         <cells>
-                            <Button
-                                text="{Tknum}"
-                                press="onTknumClick"
-                                ariaDescribedBy="defaultButtonDescription genericButtonDescription"
-                                class="customButton"
-                            >
-                                <layoutData>
-                                    <FlexItemData growFactor="1" />
-                                </layoutData>
-                            </Button>
+                            <ObjectIdentifier title="{Tknum}"/>
+                            <core:Icon
+                                src="sap-icon://{= ${TimeIn} ? (${TimeOut} ? 'status-completed' : 'alert') : 'message-error'}"
+                                color="{= ${TimeIn} ? (${TimeOut} ? 'green' : 'yellow') : 'red'}"
+                            />
+                            <Text text="{Tdlnr}" />
+                            <Text text="{Signi}" />
                             <Text
                                 text="{path: 'TimeIn', formatter: '.formatTime'}"
-                            />
-                            <core:Icon
-                                src="sap-icon://{= ${Streg} !== 'X' ? (!${TimeIn} ? 'status-completed' : 'message-success') : 'message-error'}"
-                                color="{= ${Streg} !== 'X' ? (!${TimeIn} ? 'green' : 'green') : 'red'}"
                             />
                             <Text
                                 text="{path: 'TimeOut', formatter: '.formatTime'}"
                             />
                             <Text
+                                text="{path: 'Upabf', formatter: '.formatTime'}"
+                            />
+                            <Text
                                 text="{path: 'Uzabf', formatter: '.formatTime'}"
                             />
                             <core:Icon
-                                src="sap-icon://{= ${Stabf} === 'X' ? 'status-completed' : (${Stlbg} === 'X' ? 'alert' : 'message-error')}"
-                                color="{= ${Stabf} === 'X' ? 'green' : (${Stlbg} === 'X' ? 'yellow' : 'red')}"
+                                src="sap-icon://{= !${Upabf} ? (!${Uzapf} ? 'status-completed' : 'alert') : 'message-error'}"
+                                color="{= !${Upabf} ? (${Uzapf} ? 'green' : 'yellow') : 'red'}"
                             />
-                            <Text text="{Tdlnr}" />
-                            <Text
-                                text="{path: 'AppTime', formatter: '.formatTime'}"
-                            />
-                            <Text text="{Signi}" />
                             <Text text="{Remarks}" />
                         </cells>
                     </ColumnListItem>
