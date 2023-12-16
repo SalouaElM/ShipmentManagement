@@ -66,7 +66,7 @@
 >
     <m:headerToolbar>
         <m:OverflowToolbar>
-            <m:Title text="Deliveries" level="H2"/>
+            <m:Title id="deliveryTableTitle" text="Deliveries" level="H2"/>
             <m:ToolbarSpacer/>
 					<m:Button
 						tooltip="Sort"

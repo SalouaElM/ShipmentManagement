@@ -16,6 +16,7 @@ sap.ui.define(
       "ap.shipmentmanagement.controller.ShipmentDetail",
       {
         _mViewSettingsDialogs: {},
+        _deliveryCount: 0, // Add a property to store the count
         onInit: function () {
           let oRouter = this.getOwnerComponent().getRouter();
           oRouter
@@ -31,7 +32,16 @@ sap.ui.define(
 
           this.getView().bindElement({
             path: sShipmentPath,
-            //model: " ",
+            events: {
+              dataReceived: function (oData) {
+                // Update the local delivery count variable
+                this._deliveryCount = oData.getParameter("data").DeliverySet
+                  .results
+                  ? oData.getParameter("data").DeliverySet.results.length
+                  : 0;
+                this.updateDeliveryCountTitle(); // Call the function to update the title
+              }.bind(this),
+            },
           });
 
           var oTable = this.getView().byId("deliveryTable");
@@ -98,6 +108,10 @@ sap.ui.define(
 
           // apply the selected sort and group settings
           oBinding.sort(aSorters);
+        },
+        updateDeliveryCountTitle: function () {
+          var oTitle = this.getView().byId("deliveryTableTitle");
+          oTitle.setText("Deliveries (" + this._deliveryCount + ")");
         },
 
         onExit: function () {
