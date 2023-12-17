@@ -33,9 +33,15 @@ sap.ui.define(
           seconds.toString().padStart(2, '0');
 
         return formattedTime;
+      },    
+      formatTimeValue: function (oTime) {
+        if (oTime && oTime.ms) {
+          var oDate = new Date(oTime.ms);
+          var oFormat = sap.ui.core.format.DateFormat.getTimeInstance({ pattern: "HH:mm:ss" });
+          return oFormat.format(oDate);
+        }
+        return null;
       },
-
-
       onListItemPress: function (oEvent) {
         //var oFCL = this.oView.getParent().getParent();
         let sShipmentPath = oEvent.getSource().getBindingContext().getPath(),
@@ -52,73 +58,44 @@ sap.ui.define(
       onTknumClick: function (oEvent) {
         let sShipmentPath = oEvent.getSource().getBindingContext().getPath();
         let oSelectedShipment = sShipmentPath.split("'")[1];
-
+      
+        // Open the inplanningDialog and pass the Tknum
         this.openInplanningDialog(oSelectedShipment);
       },
       // Define oDialog as a member variable of the controller
       oDialog: null,
 
-      openInplanningDialog: function (oSelectedShipment) {
+      openInplanningDialog: function (sSelectedTknum) {
         var oModel = this.getView().getModel();
       
-        oModel.read("/ShipmentSet('" + oSelectedShipment + "')", {
+        // Read the specific Shipment data based on Tknum
+        oModel.read("/ShipmentSet('" + sSelectedTknum + "')", {
           success: function (oData) {
             if (!this.oDialog) {
               this.oDialog = sap.ui.xmlfragment("ap.shipmentmanagement.fragments.inplanningDialog", this);
               this.getView().addDependent(this.oDialog);
             }
       
+            // Set the model to the fragment
             this.oDialog.setModel(oModel);
       
-            var oFragmentContent = this.oDialog.getContent()[0];
-      
-            if (oFragmentContent instanceof sap.m.VBox) {
-              var oTextTknum = oFragmentContent.getItems()[1];
-              var oTimeInPicker = oFragmentContent.getItems()[3];
-              var oTimeOutPicker = oFragmentContent.getItems()[5];
-              var oAppTimePicker = oFragmentContent.getItems()[7];
-              var oTextAreaRemarks = oFragmentContent.getItems()[9];
-      
-              oTextTknum.setText(oData.Tknum);
-      
-              function formatTime(oTime) {
-                if (!oTime || !oTime.ms) {
-                  return "";
-                }
-                var time = oTime.ms / 1000;
-                var hours = Math.floor(time / 3600);
-                var minutes = Math.floor((time % 3600) / 60);
-                var seconds = Math.floor(time % 60);
-                return hours.toString().padStart(2, '0') + ':' +
-                       minutes.toString().padStart(2, '0') + ':' +
-                       seconds.toString().padStart(2, '0');
+            // Bind the specific Shipment data to the dialog
+            this.oDialog.bindElement({
+              path: "/ShipmentSet('" + sSelectedTknum + "')",
+              parameters: {
+                select: "Tknum, TimeIn, TimeOut, AppTime, Remarks" // Specify required fields
               }
+            });
       
-              if (oData.TimeIn) {
-                var formattedTimeIn = formatTime(oData.TimeIn);
-                oTimeInPicker.setDateValue(new Date("01/01/1970 " + formattedTimeIn));
-                oTimeInPicker.setValue(formattedTimeIn);
-              }
-      
-              if (oData.TimeOut) {
-                var formattedTimeOut = formatTime(oData.TimeOut);
-                oTimeOutPicker.setDateValue(new Date("01/01/1970 " + formattedTimeOut));
-                oTimeOutPicker.setValue(formattedTimeOut);
-              }
-      
-              if (oData.AppTime) {
-                var formattedAppTime = formatTime(oData.AppTime);
-                oAppTimePicker.setDateValue(new Date("01/01/1970 " + formattedAppTime));
-                oAppTimePicker.setValue(formattedAppTime);
-              }
-      
-              oTextAreaRemarks.setValue(oData.Remarks);
-      
-              this.oDialog.open();
-            }
-          }.bind(this)
+            // Open the inplanningDialog
+            this.oDialog.open();
+          }.bind(this),
+          error: function () {
+            // Handle error while fetching Shipment data
+          }
         });
       },
+      
       
       onCloseInplanningDialog: function () {
         if (this.oDialog) {
@@ -193,7 +170,28 @@ sap.ui.define(
       onNavToLog: function(oEvent){
         this.getOwnerComponent().getRouter().navTo("log");
     },
-
-    });
+    onUpdateInplanning: function () {
+      var oView = this.getView();
+      var oModel = oView.getModel();
+    
+      var that = this; // Store reference to 'this' context
+    
+      // Update the Shipment inplanning
+      oModel.submitChanges({
+        success: function() {
+          // Success message
+          sap.m.MessageToast.show("Update successful");
+    
+          // Close the dialog or perform any other action if needed
+          that.onCloseInplanningDialog();
+        },
+        error: function() {
+          // Error message
+          sap.m.MessageToast.show("Update unsuccessful");
+        }
+      });
+    }
+          
+   });
   }
 );
