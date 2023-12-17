@@ -17,6 +17,9 @@ sap.ui.define(
       onInit: function () {
         // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
         this._mViewSettingsDialogs = {};
+        
+        let oModel = new sap.ui.model.json.JSONModel({currentDate: new Date()});
+        this.getView().setModel(oModel, "settings");
       },
       formatTime: function (oTime) {
         if (!oTime || !oTime.ms) {
@@ -190,7 +193,7 @@ sap.ui.define(
           sap.m.MessageToast.show("Update unsuccessful");
         }
       });
-    }
+    },  
           
    });
   }
