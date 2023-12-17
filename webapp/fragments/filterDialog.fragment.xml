@@ -13,7 +13,32 @@
 					<ViewSettingsItem text="United Stated" key="US00" />
 				</items>
 			</ViewSettingsFilterItem>
-            
+			<ViewSettingsFilterItem
+				text="Planned Date"
+				key="PlannedDate"
+				multiSelect="false">
+				<items>
+					<ViewSettingsItem text="2023-11-30" key="2023-11-30" />
+					<ViewSettingsItem text="2023-11-24" key="2023-11-24" />
+					<ViewSettingsItem text="2023-11-16" key="2023-11-16" />
+				</items>
+			</ViewSettingsFilterItem>
+			<!-- <ViewSettingsCustomItem
+				text="Date"
+				key="PlannedDate">
+				<customControl>
+				<DateTimePicker
+					id="DP1"
+					placeholder="Enter Date"
+					change="handleChange"
+					class="sapUiSmallMarginBottom"
+					value="{
+					'path': 'settings>/currentDate',
+					'type': 'sap.ui.model.type.Date',
+					'formatOptions': {'pattern': 'yyyy-MM-dd'} }"
+					/>
+				</customControl>
+			</ViewSettingsCustomItem> -->
 		</filterItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>
