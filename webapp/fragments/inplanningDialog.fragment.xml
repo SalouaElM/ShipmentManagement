@@ -4,21 +4,27 @@
     title="Inplanning Shipment"
     contentWidth="auto"
     contentHeight="auto"
+    type="Message"
+    resizable="true"
+    draggable="true"
   >
     <VBox>
       <Label text="Tknum:" />
-      <Text id="tknumText" />
+      <Text id="tknumText" text="{Tknum}" />
       <Label text="Time In:" />
-      <TimePicker id="timeInPicker" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
+      <TimePicker id="timeInPicker" value="{ path: 'TimeIn', formatter: '.formatTimeValue' }" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
       <Label text="Time Out:" />
-      <TimePicker id="timeOutPicker" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
+      <TimePicker id="timeOutPicker" value="{ path: 'TimeOut', formatter: '.formatTimeValue' }" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
       <Label text="App Time:" />
-      <TimePicker id="appTimePicker" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
+      <TimePicker id="appTimePicker" value="{ path: 'AppTime', formatter: '.formatTimeValue' }" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
       <Label text="Remarks:" />
-      <TextArea id="remarksTextArea" />
+      <TextArea id="remarksTextArea" value="{Remarks}" />
     </VBox>
     <beginButton>
       <Button text="Close" press=".onCloseInplanningDialog" />
     </beginButton>
+    <endButton>
+        <Button text="Update" press=".onUpdateInplanning" />
+    </endButton>
   </Dialog>
 </core:FragmentDefinition>
