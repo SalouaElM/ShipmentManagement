@@ -20,7 +20,9 @@ sap.ui.define(
         
         let oModel = new sap.ui.model.json.JSONModel({currentDate: new Date()});
         this.getView().setModel(oModel, "settings");
+        
       },
+
       formatTime: function (oTime) {
         if (!oTime || !oTime.ms) {
           return "";
@@ -36,14 +38,6 @@ sap.ui.define(
           seconds.toString().padStart(2, '0');
 
         return formattedTime;
-      },    
-      formatTimeValue: function (oTime) {
-        if (oTime && oTime.ms) {
-          var oDate = new Date(oTime.ms);
-          var oFormat = sap.ui.core.format.DateFormat.getTimeInstance({ pattern: "HH:mm:ss" });
-          return oFormat.format(oDate);
-        }
-        return null;
       },
       onListItemPress: function (oEvent) {
         //var oFCL = this.oView.getParent().getParent();
@@ -98,8 +92,7 @@ sap.ui.define(
           }
         });
       },
-      
-      
+  
       onCloseInplanningDialog: function () {
         if (this.oDialog) {
           this.oDialog.close();
@@ -176,16 +169,16 @@ sap.ui.define(
     onUpdateInplanning: function () {
       var oView = this.getView();
       var oModel = oView.getModel();
-    
+
       var that = this; // Store reference to 'this' context
-    
+
       // Update the Shipment inplanning
       oModel.submitChanges({
         success: function() {
           // Success message
           sap.m.MessageToast.show("Update successful");
-    
-          // Close the dialog or perform any other action if needed
+
+          // Close the dialog
           that.onCloseInplanningDialog();
         },
         error: function() {
@@ -193,8 +186,8 @@ sap.ui.define(
           sap.m.MessageToast.show("Update unsuccessful");
         }
       });
-    },  
-          
+    }          
+
    });
   }
 );

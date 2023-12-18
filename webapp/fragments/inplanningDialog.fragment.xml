@@ -12,11 +12,14 @@
       <Label text="Tknum:" />
       <Text id="tknumText" text="{Tknum}" />
       <Label text="Time In:" />
-      <TimePicker id="timeInPicker" value="{ path: 'TimeIn', formatter: '.formatTimeValue' }" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
+      <TimePicker displayFormat="long"
+            value="{ path: 'TimeIn', type: 'sap.ui.model.odata.type.Time'}"/>
       <Label text="Time Out:" />
-      <TimePicker id="timeOutPicker" value="{ path: 'TimeOut', formatter: '.formatTimeValue' }" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
+      <TimePicker displayFormat="short"
+            value="{ path: 'TimeOut', type: 'sap.ui.model.odata.type.Time'}"/>
       <Label text="App Time:" />
-      <TimePicker id="appTimePicker" value="{ path: 'AppTime', formatter: '.formatTimeValue' }" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" />
+      <TimePicker displayFormat="short"
+            value="{ path: 'AppTime', type: 'sap.ui.model.odata.type.Time'}"/>
       <Label text="Remarks:" />
       <TextArea id="remarksTextArea" value="{Remarks}" />
     </VBox>
