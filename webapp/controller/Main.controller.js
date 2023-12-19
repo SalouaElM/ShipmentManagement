@@ -206,7 +206,67 @@ sap.ui.define(
             sap.m.MessageToast.show("Update unsuccessful");
           }
         });
+      },
+      formatRemarks: function(sRemarks) {
+        if (sRemarks && sRemarks.length > 20) {
+            // Split the remarks into an array of words
+            let wordsArray = sRemarks.split(' ');
+    
+            // Initialize variables
+            let truncatedRemarks = '';
+            let charCount = 0;
+    
+            // Iterate through words and construct truncated remarks
+            for (let word of wordsArray) {
+                if ((charCount + word.length) <= 20) {
+                    truncatedRemarks += word + ' ';
+                    charCount += word.length + 1; // Adding 1 for space after the word
+                } else {
+                    break; // Break the loop if the character count exceeds 20
+                }
+            }
+    
+            // Trim the trailing space and add ellipsis if needed
+            truncatedRemarks = truncatedRemarks.trim();
+            if (sRemarks.length !== truncatedRemarks.length) {
+                truncatedRemarks += '...';
+            }
+    
+            return truncatedRemarks;
+        }
+        return sRemarks;
+    },
+    
+    
+    onRemarkClick: function(oEvent) {
+      var sRemarks = oEvent.getSource().getBindingContext().getProperty("Remarks");
+      if (sRemarks && sRemarks.length > 20) {
+          this.openRemarksDialog(sRemarks);
       }
+  },
+    
+  openRemarksDialog: function(sRemarks) {
+    if (!this._oRemarksDialog) {
+        this._oRemarksDialog = sap.ui.xmlfragment(
+            "ap.shipmentmanagement.fragments.remarksDialog",
+            this
+        );
+        this.getView().addDependent(this._oRemarksDialog);
+    }
+
+    var oModel = new sap.ui.model.json.JSONModel({
+        remarks: sRemarks
+    });
+    this._oRemarksDialog.setModel(oModel);
+
+    this._oRemarksDialog.open();
+},
+    
+    onCloseRemarksDialog: function() {
+        if (this._oRemarksDialog) {
+            this._oRemarksDialog.close();
+        }
+    }
 
     });
   }
