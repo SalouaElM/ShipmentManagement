@@ -17,10 +17,12 @@ sap.ui.define(
       onInit: function () {
         // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
         this._mViewSettingsDialogs = {};
-        
-        let oModel = new sap.ui.model.json.JSONModel({currentDate: new Date()});
+
+        let oModel = new sap.ui.model.json.JSONModel({ currentDate: new Date() });
         this.getView().setModel(oModel, "settings");
+
       },
+
       formatTime: function (oTime) {
         if (!oTime || !oTime.ms) {
           return "";
@@ -36,14 +38,6 @@ sap.ui.define(
           seconds.toString().padStart(2, '0');
 
         return formattedTime;
-      },    
-      formatTimeValue: function (oTime) {
-        if (oTime && oTime.ms) {
-          var oDate = new Date(oTime.ms);
-          var oFormat = sap.ui.core.format.DateFormat.getTimeInstance({ pattern: "HH:mm:ss" });
-          return oFormat.format(oDate);
-        }
-        return null;
       },
       onListItemPress: function (oEvent) {
         //var oFCL = this.oView.getParent().getParent();
@@ -61,7 +55,7 @@ sap.ui.define(
       onTknumClick: function (oEvent) {
         let sShipmentPath = oEvent.getSource().getBindingContext().getPath();
         let oSelectedShipment = sShipmentPath.split("'")[1];
-      
+
         // Open the inplanningDialog and pass the Tknum
         this.openInplanningDialog(oSelectedShipment);
       },
@@ -70,7 +64,7 @@ sap.ui.define(
 
       openInplanningDialog: function (sSelectedTknum) {
         var oModel = this.getView().getModel();
-      
+
         // Read the specific Shipment data based on Tknum
         oModel.read("/ShipmentSet('" + sSelectedTknum + "')", {
           success: function (oData) {
@@ -78,10 +72,10 @@ sap.ui.define(
               this.oDialog = sap.ui.xmlfragment("ap.shipmentmanagement.fragments.inplanningDialog", this);
               this.getView().addDependent(this.oDialog);
             }
-      
+
             // Set the model to the fragment
             this.oDialog.setModel(oModel);
-      
+
             // Bind the specific Shipment data to the dialog
             this.oDialog.bindElement({
               path: "/ShipmentSet('" + sSelectedTknum + "')",
@@ -89,7 +83,7 @@ sap.ui.define(
                 select: "Tknum, TimeIn, TimeOut, AppTime, Remarks" // Specify required fields
               }
             });
-      
+
             // Open the inplanningDialog
             this.oDialog.open();
           }.bind(this),
@@ -98,8 +92,7 @@ sap.ui.define(
           }
         });
       },
-      
-      
+
       onCloseInplanningDialog: function () {
         if (this.oDialog) {
           this.oDialog.close();
@@ -167,34 +160,54 @@ sap.ui.define(
           aFilters.push(oFilter);
         });
 
-        // apply filter settings
-        oBinding.filter(aFilters);
-      },
-      onNavToLog: function(oEvent){
-        this.getOwnerComponent().getRouter().navTo("log");
-    },
-    onUpdateInplanning: function () {
-      var oView = this.getView();
-      var oModel = oView.getModel();
-    
-      var that = this; // Store reference to 'this' context
-    
-      // Update the Shipment inplanning
-      oModel.submitChanges({
-        success: function() {
-          // Success message
-          sap.m.MessageToast.show("Update successful");
-    
-          // Close the dialog or perform any other action if needed
-          that.onCloseInplanningDialog();
-        },
-        error: function() {
-          // Error message
-          sap.m.MessageToast.show("Update unsuccessful");
+        // Additional filtering for the DatePicker (PlannedDate)
+        var oDatePicker = this.getView().byId("planneddate");
+        var oSelectedDate = oDatePicker.getValue();
+
+        if (oSelectedDate) {
+          // Convert date string to JavaScript Date object
+          var oDate = new Date(oSelectedDate);
+
+          // Format the date as yyyy-MM-dd
+          var sFormattedDate = oDate.getFullYear() + '-' + ('0' + (oDate.getMonth() + 1)).slice(-2) + '-' + ('0' + oDate.getDate()).slice(-2);
+
+          var oDateFilter = new sap.ui.model.Filter("PlannedDate", sap.ui.model.FilterOperator.EQ, sFormattedDate);
+          aFilters.push(oDateFilter);
         }
-      });
-    },  
-          
-   });
+
+
+        // Apply filters to the binding
+        if (aFilters.length > 0) {
+          oBinding.filter(new sap.ui.model.Filter(aFilters, true)); // Set 'true' for AND logic between multiple filters
+        } else {
+          oBinding.filter([]); // Clear filters if no filters are selected
+        }
+      },
+      onNavToLog: function (oEvent) {
+        this.getOwnerComponent().getRouter().navTo("log");
+      },
+      onUpdateInplanning: function () {
+        var oView = this.getView();
+        var oModel = oView.getModel();
+
+        var that = this; // Store reference to 'this' context
+
+        // Update the Shipment inplanning
+        oModel.submitChanges({
+          success: function () {
+            // Success message
+            sap.m.MessageToast.show("Update successful");
+
+            // Close the dialog
+            that.onCloseInplanningDialog();
+          },
+          error: function () {
+            // Error message
+            sap.m.MessageToast.show("Update unsuccessful");
+          }
+        });
+      }
+
+    });
   }
 );

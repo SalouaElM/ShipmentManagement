@@ -134,16 +134,14 @@
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
                             </Button>
-                            <Text
-                                text="{path: 'TimeIn', formatter: '.formatTime'}"
-                            />
+                           <Text text="{ path: 'TimeIn', type: 'sap.ui.model.odata.type.Time', formatOptions: { style: 'medium', hour12: true } }" />
+
                             <core:Icon
                                 src="sap-icon://{= ${Streg} !== 'X' ? (!${TimeIn} ? 'status-completed' : 'message-success') : 'message-error'}"
                                 color="{= ${Streg} !== 'X' ? (!${TimeIn} ? 'green' : 'green') : 'red'}"
                             />
-                            <Text
-                                text="{path: 'TimeOut', formatter: '.formatTime'}"
-                            />
+                            <Text text="{ path: 'TimeOut', type: 'sap.ui.model.odata.type.Time', formatOptions: { style: 'medium', hour12: false } }" />
+
                             <Text
                                 text="{path: 'Uzabf', formatter: '.formatTime'}"
                             />
@@ -152,9 +150,7 @@
                                 color="{= ${Stabf} === 'X' ? 'green' : (${Stlbg} === 'X' ? 'yellow' : 'red')}"
                             />
                             <Text text="{Tdlnr}" />
-                            <Text
-                                text="{path: 'AppTime', formatter: '.formatTime'}"
-                            />
+                            <Text text="{ path: 'AppTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { style: 'medium' } }" />
                             <Text text="{Signi}" />
                             <Text text="{Remarks}" />
                         </cells>
