@@ -81,7 +81,7 @@
                                 <m:headerToolbar>
                                     <m:OverflowToolbar>
                                         <m:Title
-                                            text="Deliveries"
+                                            id="deliveryTableTitle" text="Deliveries"
                                             level="H2"
                                         />
                                         <m:ToolbarSpacer />
