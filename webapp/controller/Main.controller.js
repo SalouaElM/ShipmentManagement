@@ -186,6 +186,8 @@ sap.ui.define(
       onNavToLog: function (oEvent) {
         this.getOwnerComponent().getRouter().navTo("log");
       },
+
+      //inplanning aanpassen function:
       onUpdateInplanning: function () {
         var oView = this.getView();
         var oModel = oView.getModel();
@@ -207,66 +209,126 @@ sap.ui.define(
           }
         });
       },
-      formatRemarks: function(sRemarks) {
+
+      //remarks toten functies:
+      formatRemarks: function (sRemarks) {
         if (sRemarks && sRemarks.length > 20) {
-            // Split the remarks into an array of words
-            let wordsArray = sRemarks.split(' ');
-    
-            // Initialize variables
-            let truncatedRemarks = '';
-            let charCount = 0;
-    
-            // Iterate through words and construct truncated remarks
-            for (let word of wordsArray) {
-                if ((charCount + word.length) <= 20) {
-                    truncatedRemarks += word + ' ';
-                    charCount += word.length + 1; // Adding 1 for space after the word
-                } else {
-                    break; // Break the loop if the character count exceeds 20
-                }
+          // Split the remarks into an array of words
+          let wordsArray = sRemarks.split(' ');
+
+          // Initialize variables
+          let truncatedRemarks = '';
+          let charCount = 0;
+
+          // Iterate through words and construct truncated remarks
+          for (let word of wordsArray) {
+            if ((charCount + word.length) <= 20) {
+              truncatedRemarks += word + ' ';
+              charCount += word.length + 1; // Adding 1 for space after the word
+            } else {
+              break; // Break the loop if the character count exceeds 20
             }
-    
-            // Trim the trailing space and add ellipsis if needed
-            truncatedRemarks = truncatedRemarks.trim();
-            if (sRemarks.length !== truncatedRemarks.length) {
-                truncatedRemarks += '...';
-            }
-    
-            return truncatedRemarks;
+          }
+
+          // Trim the trailing space and add ellipsis if needed
+          truncatedRemarks = truncatedRemarks.trim();
+          if (sRemarks.length !== truncatedRemarks.length) {
+            truncatedRemarks += '...';
+          }
+
+          return truncatedRemarks;
         }
         return sRemarks;
-    },
-    
-    
-    onRemarkClick: function(oEvent) {
-      var sRemarks = oEvent.getSource().getBindingContext().getProperty("Remarks");
-      if (sRemarks && sRemarks.length > 20) {
+      },
+
+
+      onRemarkClick: function (oEvent) {
+        var sRemarks = oEvent.getSource().getBindingContext().getProperty("Remarks");
+        if (sRemarks && sRemarks.length > 20) {
           this.openRemarksDialog(sRemarks);
-      }
-  },
-    
-  openRemarksDialog: function(sRemarks) {
-    if (!this._oRemarksDialog) {
-        this._oRemarksDialog = sap.ui.xmlfragment(
+        }
+      },
+
+      openRemarksDialog: function (sRemarks) {
+        if (!this._oRemarksDialog) {
+          this._oRemarksDialog = sap.ui.xmlfragment(
             "ap.shipmentmanagement.fragments.remarksDialog",
             this
-        );
-        this.getView().addDependent(this._oRemarksDialog);
-    }
-
-    var oModel = new sap.ui.model.json.JSONModel({
-        remarks: sRemarks
-    });
-    this._oRemarksDialog.setModel(oModel);
-
-    this._oRemarksDialog.open();
-},
-    
-    onCloseRemarksDialog: function() {
-        if (this._oRemarksDialog) {
-            this._oRemarksDialog.close();
+          );
+          this.getView().addDependent(this._oRemarksDialog);
         }
-    }
+
+        var oModel = new sap.ui.model.json.JSONModel({
+          remarks: sRemarks
+        });
+        this._oRemarksDialog.setModel(oModel);
+
+        this._oRemarksDialog.open();
+      },
+
+      onCloseRemarksDialog: function () {
+        if (this._oRemarksDialog) {
+          this._oRemarksDialog.close();
+        }
+      },
+
+      // plannedDate wijzigen functies:
+      onPDateClick: function (oEvent) {
+        var sPlannedDate = oEvent.getSource().getBindingContext().getProperty("PlannedDate");
+        this.getView().getModel("settings").setProperty("/planneddatepath", oEvent.getSource().getBindingContext().getPath())
+        this.openPlannedDateDialog(sPlannedDate);
+      },
+      openPlannedDateDialog: function (sPlannedDate) {
+        if (!this._oPDateDialog) {
+          this._oPDateDialog = sap.ui.xmlfragment(
+            "ap.shipmentmanagement.fragments.datePickerDialog",
+            this
+          );
+          this.getView().addDependent(this._oPDateDialog);
+        }
+
+        var oModel = new sap.ui.model.json.JSONModel({
+          plannedDate: sPlannedDate
+        });
+        this._oPDateDialog.setModel(oModel);
+
+        this._oPDateDialog.open();
+      },
+      onSavePlannedDate: function (oEvent) {
+        var oView = this.getView();
+        var oModel = oView.getModel();
+        var spath = this.getView().getModel("settings").getProperty("/planneddatepath");
+        var that = this;
+        var incomingdate= this._oPDateDialog.getModel().getData().plannedDate;
+        oModel.setProperty(spath+"/PlannedDate",new Date(incomingdate))
+
+        oModel.submitChanges({
+          success: function () {
+            // Success message
+            sap.m.MessageToast.show("Update successful");
+
+            // Close the dialog
+            that.onClosePlannedDateDialog();
+          },
+          error: function () {
+            // Error message
+            sap.m.MessageToast.show("Update unsuccessful");
+          }
+        });
+      },
+      formatDateToSubmit: function (oDate) {
+        var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+          pattern: "yyyy-MM-dd'T'HH:mm:ss"
+        });
+        var sFormattedDate = oDateFormat.format(oDate);
+
+        return sFormattedDate;
+      },
+      onClosePlannedDateDialog: function () {
+        if (this._oPDateDialog) {
+          this._oPDateDialog.close();
+        }
+      },
 
     });
   }
