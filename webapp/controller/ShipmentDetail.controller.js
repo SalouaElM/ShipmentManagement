@@ -32,16 +32,6 @@ sap.ui.define(
 
           this.getView().bindElement({
             path: sShipmentPath,
-            events: {
-              dataReceived: function (oData) {
-                // Update the local delivery count variable
-                this._deliveryCount = oData.getParameter("data").DeliverySet
-                  .results
-                  ? oData.getParameter("data").DeliverySet.results.length
-                  : 0;
-                this.updateDeliveryCountTitle(); // Call the function to update the title
-              }.bind(this),
-            },
           });
 
           var oTable = this.getView().byId("deliveryTable");
@@ -49,6 +39,17 @@ sap.ui.define(
             path: sShipmentPath + "/DeliverySet",
             template: oTable.getBindingInfo("items").template,
           });
+          // Get the count of items and update the title
+          var oBinding = oTable.getBinding("items");
+          oBinding.attachDataReceived(function (oEvent) {
+            var iCount = oEvent.getParameter("data").results.length;
+            this.updateDeliveryTableTitle(iCount);
+          }, this);
+        },
+
+        updateDeliveryTableTitle: function (iCount) {
+          var oTitle = this.getView().byId("deliveryTableTitle");
+          oTitle.setText("Deliveries (" + iCount + ")");
         },
         formatTime: function (oTime) {
           if (!oTime || !oTime.ms) {
@@ -108,10 +109,6 @@ sap.ui.define(
 
           // apply the selected sort and group settings
           oBinding.sort(aSorters);
-        },
-        updateDeliveryCountTitle: function () {
-          var oTitle = this.getView().byId("deliveryTableTitle");
-          oTitle.setText("Deliveries (" + this._deliveryCount + ")");
         },
 
         onExit: function () {
