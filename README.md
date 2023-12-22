@@ -49,7 +49,7 @@ Om het project in Visual Studio Code te kunnen bewerken, heeft u de volgende plu
 
 ### Architecture Diagram:
 
-![Architecture Diagram](link_naar_diagram)
+![Architecture Diagram](Architectuur.png)
 
 ## ZSD_03_SHIPMENT_MANAGEMENT Gateway-service
 
