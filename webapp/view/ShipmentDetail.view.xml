@@ -72,6 +72,10 @@
 						tooltip="Sort"
 						icon="sap-icon://sort"
 						press="handleSortButtonPressed"/>
+					<m:Button
+						tooltip="Filter"
+						icon="sap-icon://filter"
+						press="handleFilterButtonPressed"/>
 
         </m:OverflowToolbar>
     </m:headerToolbar>

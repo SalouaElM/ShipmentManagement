@@ -5,11 +5,12 @@ sap.ui.define(
     "sap/f/library",
     "sap/ui/model/Sorter",
     "sap/ui/core/Fragment",
+    "sap/ui/model/Filter",
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, Device, fioriLibrary, Sorter, Fragment) {
+  function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter) {
     "use strict";
 
     return Controller.extend(
@@ -110,7 +111,13 @@ sap.ui.define(
           // apply the selected sort and group settings
           oBinding.sort(aSorters);
         },
-
+        handleFilterButtonPressed: function () {
+          this.getViewSettingsDialog(
+            "ap.shipmentmanagement.fragments.filterDialogDetail"
+          ).then(function (oViewSettingsDialog) {
+            oViewSettingsDialog.open();
+          });
+        },
         onExit: function () {
           this.oRouter
             .getRoute("list")
