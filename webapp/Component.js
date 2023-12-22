@@ -25,6 +25,7 @@ sap.ui.define(
       init: function () {
         // call the base component's init function
         UIComponent.prototype.init.apply(this, arguments);
+        this.handleErrorMessageFormBackEnd();
 
         let oModel = new sap.ui.model.json.JSONModel({
           layout: fioriLibrary.LayoutType.OneColumn,
@@ -52,6 +53,15 @@ sap.ui.define(
 
         oModel.setProperty("/layout", sLayout);
       },
+      handleErrorMessageFormBackEnd: function () {
+        this.getModel().attachRequestFailed((oError) => {
+          sap.m.MessageBox.error(
+            `Something went wrong with the following: ${
+              JSON.parse(oError.getParameters().response.responseText).error.message.value
+            } `
+          );
+        });
+      }
     });
   }
 );
