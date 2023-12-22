@@ -16,6 +16,7 @@ sap.ui.define(
       "ap.shipmentmanagement.controller.ShipmentDetail",
       {
         _mViewSettingsDialogs: {},
+        _deliveryCount: 0, // Add a property to store the count
 
         onInit: function () {
           let oRouter = this.getOwnerComponent().getRouter();
@@ -39,10 +40,21 @@ sap.ui.define(
             path: sShipmentPath + "/DeliverySet",
             parameters: {
               $expand: "DeliveryItemSet", // Expand DeliveryItemSet
-              $filter: "DeliveryItemSet/Vbeln eq Vbeln" // Apply filter on Vbeln field
+              $filter: "DeliveryItemSet/Vbeln eq Vbeln", // Apply filter on Vbeln field
             },
             template: oTable.getBindingInfo("items").template,
           });
+          // Get the count of items and update the title
+          var oBinding = oTable.getBinding("items");
+          oBinding.attachDataReceived(function (oEvent) {
+            var iCount = oEvent.getParameter("data").results.length;
+            this.updateDeliveryTableTitle(iCount);
+          }, this);
+        },
+
+        updateDeliveryTableTitle: function (iCount) {
+          var oTitle = this.getView().byId("deliveryTableTitle");
+          oTitle.setText("Deliveries (" + iCount + ")");
         },
         formatTime: function (oTime) {
           if (!oTime || !oTime.ms) {
@@ -117,21 +129,26 @@ sap.ui.define(
         },
         onListItemPress2: function (oEvent) {
           var oContext = oEvent.getSource().getBindingContext();
-        
+
           if (oContext) {
             if (!this.oDialog) {
-              this.oDialog = sap.ui.xmlfragment("ap.shipmentmanagement.fragments.Items", this);
+              this.oDialog = sap.ui.xmlfragment(
+                "ap.shipmentmanagement.fragments.Items",
+                this
+              );
               this.getView().addDependent(this.oDialog);
             }
-        
+
             var sPath = oContext.getPath();
-        
+
             var oModel = this.getView().getModel();
             oModel.read(sPath + "/DeliveryItemSet", {
               success: function (oData) {
                 if (oData && oData.results) {
                   // Process and use oData.results
-                  let oOfferModel = new sap.ui.model.json.JSONModel(oData.results);
+                  let oOfferModel = new sap.ui.model.json.JSONModel(
+                    oData.results
+                  );
                   this.oDialog.setModel(oOfferModel, "offerModel");
 
                   this.oDialog.open();
@@ -141,16 +158,14 @@ sap.ui.define(
               }.bind(this),
               error: function () {
                 console.error("Failed to fetch DeliveryItemSet data");
-              }
+              },
             });
           }
         },
 
         onCloseDialog: function (oEvent) {
-
           this.oDialog.close();
-
-        }
+        },
       }
     );
   }
