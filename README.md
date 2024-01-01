@@ -49,7 +49,7 @@ Om het project in Visual Studio Code te kunnen bewerken, heeft u de volgende plu
 
 ### Architecture Diagram:
 
-![Architecture Diagram](link_naar_diagram)
+![Architecture Diagram](Diagrammen/SAP_Architectuur.png)
 
 ## ZSD_03_SHIPMENT_MANAGEMENT Gateway-service
 
@@ -141,6 +141,6 @@ VBELN in DeliverySet komt overeen met VBELN in DeliveryItemSet.
 - SHIPMENTSET_GET_ENTITY: Haalt een enkele Shipment-entiteit op.
 - SHIPMENTSET_GET_ENTITYSET: Haalt een set van Shipment-entiteiten op.
 
-## Het classe diagram
+## Het klasse diagram
 
-![Classe diagram](classeDiagram.png)
+![Class_diagram](Diagrammen/Class_diagram.png)
