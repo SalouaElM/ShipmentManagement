@@ -47,6 +47,10 @@ U kunt het volledige project vinden op de volgende locatie: [ShipmentManagement 
 
 Om het project in Visual Studio Code te kunnen bewerken, heeft u de volgende plugin nodig: SAP Fiori Tools - Extension Pack
 
+U kan de backend vinden onder transportnummer: A03K903053.
+
+De user manual is te vinden op volgende link: https://docs.google.com/document/d/1EGz4fsrFLD8i3y4GVPlXSKiAmL5qPJwgVC-bWSaaHCU/edit?usp=sharing 
+
 ### Architecture Diagram:
 
 ![Architecture Diagram](Diagrammen/SAP_Architectuur.png)
