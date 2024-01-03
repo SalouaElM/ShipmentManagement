@@ -124,6 +124,14 @@
                     >
                         <Text text="Remarks" />
                     </Column>
+                     <Column
+                        id="pdateCol"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End"
+                    >
+                        <Text text="pdate" />
+                    </Column>
                 </columns>
                 <items>
                     <ColumnListItem
@@ -169,7 +177,7 @@
                                     press=".onRemarkClick"
                                     
                                 />
-
+                            <Button text="Change Planned Date" press=".onPDateClick" ariaDescribedBy="defaultButtonDescription genericButtonDescription" class="customButton" />
                         </cells>
                     </ColumnListItem>
                 </items>
